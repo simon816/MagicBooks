@@ -1,6 +1,7 @@
 package com.kjmaster.mb.handlers;
 
 import com.google.common.base.Predicate;
+import com.kjmaster.mb.entities.WaterGolem;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.earth.EarthSkillPointsProvider;
@@ -20,6 +21,7 @@ import com.kjmaster.mb.util.LightningCooldown;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -223,7 +225,11 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
             if (FireBlast == 1) {
                 serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + "FIRE BLAST!"));
                 EntityPlayer player = serverPlayer;
+                World world2 = serverPlayer.getServerWorld();
                 World world = player.world;
+                WaterGolem waterGolem = new WaterGolem(world2);
+                waterGolem.setLocationAndAngles(serverPlayer.posX, serverPlayer.posY, serverPlayer.posZ, 0F, 0F);
+                world2.spawnEntity(waterGolem);
                 List<BlockPos> blocks = new ArrayList<BlockPos>();
                 int range = 10;
                 for (int x = -range; x < range + 1; x++) {

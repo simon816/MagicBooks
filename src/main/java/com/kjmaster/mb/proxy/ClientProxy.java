@@ -4,14 +4,10 @@ package com.kjmaster.mb.proxy;
  * Created by pbill_000 on 05/06/2017.
  */
 import com.kjmaster.mb.Ref;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.*;
-
-import java.awt.*;
 
 
 public class ClientProxy extends CommonProxy{
