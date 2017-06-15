@@ -1,6 +1,5 @@
-package com.kjmaster.mb.spellmanager.lightning;
+package com.kjmaster.mb.spellmanager.air.lightning;
 
-import com.kjmaster.mb.spellmanager.lightning.ILightningManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

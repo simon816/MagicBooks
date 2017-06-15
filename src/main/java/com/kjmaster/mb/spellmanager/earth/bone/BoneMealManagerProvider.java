@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.bone;
+package com.kjmaster.mb.spellmanager.earth.bone;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;

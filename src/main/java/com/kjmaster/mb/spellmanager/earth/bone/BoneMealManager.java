@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.bone;
+package com.kjmaster.mb.spellmanager.earth.bone;
 
 /**
  * Created by pbill_000 on 08/06/2017.

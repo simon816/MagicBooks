@@ -1,7 +1,6 @@
-package com.kjmaster.mb.spellmanager.fireblast;
+package com.kjmaster.mb.spellmanager.fire.fireblast;
 
 
-import akka.japi.pf.FI;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.fireblast;
+package com.kjmaster.mb.spellmanager.fire.fireblast;
 
 /**
  * Created by pbill_000 on 12/06/2017.

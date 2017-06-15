@@ -8,21 +8,16 @@ import com.kjmaster.mb.skillpoints.earth.IEarthSkillPoints;
 import com.kjmaster.mb.skillpoints.fire.FireSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.fire.IFireSkillPoints;
 import com.kjmaster.mb.skillpoints.water.IWaterSkillPoints;
-import com.kjmaster.mb.skillpoints.water.WaterSkillPoints;
 import com.kjmaster.mb.skillpoints.water.WaterSkillPointsProvider;
-import com.kjmaster.mb.spellmanager.Invisibility.IInvisibilityManager;
-import com.kjmaster.mb.spellmanager.Invisibility.InvisibilityManagerProvider;
-import com.kjmaster.mb.spellmanager.bone.BoneMealManagerProvider;
-import com.kjmaster.mb.spellmanager.bone.IBoneMealManager;
-import com.kjmaster.mb.spellmanager.lightning.ILightningManager;
-import com.kjmaster.mb.spellmanager.lightning.LightningManagerProvider;
+import com.kjmaster.mb.spellmanager.air.Invisibility.IInvisibilityManager;
+import com.kjmaster.mb.spellmanager.air.Invisibility.InvisibilityManagerProvider;
+import com.kjmaster.mb.spellmanager.earth.bone.BoneMealManagerProvider;
+import com.kjmaster.mb.spellmanager.earth.bone.IBoneMealManager;
+import com.kjmaster.mb.spellmanager.air.lightning.ILightningManager;
+import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.List;
 
 /**
  * Created by pbill_000 on 11/06/2017.

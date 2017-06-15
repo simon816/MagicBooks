@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.Invisibility;
+package com.kjmaster.mb.spellmanager.air.Invisibility;
 
 /**
  * Created by pbill_000 on 10/06/2017.

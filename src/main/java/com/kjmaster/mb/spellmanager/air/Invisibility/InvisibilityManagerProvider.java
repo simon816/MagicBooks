@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.Invisibility;
+package com.kjmaster.mb.spellmanager.air.Invisibility;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;

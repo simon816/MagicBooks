@@ -1,6 +1,5 @@
-package com.kjmaster.mb.spellmanager.lightning;
+package com.kjmaster.mb.spellmanager.air.lightning;
 
-import com.kjmaster.mb.spellmanager.lightning.ILightningManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagFloat;

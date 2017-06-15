@@ -1,6 +1,5 @@
-package com.kjmaster.mb.spellmanager.fireblast;
+package com.kjmaster.mb.spellmanager.fire.fireblast;
 
-import com.kjmaster.mb.spellmanager.bone.IBoneMealManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagFloat;

@@ -1,4 +1,4 @@
-package com.kjmaster.mb.spellmanager.lightning;
+package com.kjmaster.mb.spellmanager.air.lightning;
 
 /**
  * Created by pbill_000 on 10/06/2017.
