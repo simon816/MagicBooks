@@ -3,13 +3,14 @@ package com.kjmaster.mb;
 /**
  * Created by pbill_000 on 05/06/2017.
  */
-import com.kjmaster.mb.entities.RenderWaterGolem;
+import com.kjmaster.mb.client.render.RenderWaterGolem;
 import com.kjmaster.mb.entities.WaterGolem;
 import com.kjmaster.mb.events.CloneEvent;
 import com.kjmaster.mb.events.Tick;
 import com.kjmaster.mb.handlers.CapabilityHandler;
 import com.kjmaster.mb.handlers.LootHandler;
 import com.kjmaster.mb.init.ModCrafting;
+import com.kjmaster.mb.init.ModEntities;
 import com.kjmaster.mb.network.ModGuiHandler;
 import com.kjmaster.mb.proxy.CommonProxy;
 import net.minecraft.util.ResourceLocation;
@@ -36,7 +37,7 @@ public class MagicBooks {
     public void preInit(FMLPreInitializationEvent event) {
         LOGGER.info("Starting Pre-Initialization");
         proxy.preInit(event);
-        RenderingRegistry.registerEntityRenderingHandler(WaterGolem.class, RenderWaterGolem.FACTORY);
+        ModEntities.registerEntities();
     }
 
     @Mod.EventHandler
@@ -50,8 +51,8 @@ public class MagicBooks {
         MinecraftForge.EVENT_BUS.register(new Tick());
         CommonProxy.register();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagicBooks.instance, new ModGuiHandler());
-        EntityRegistry.registerModEntity(new ResourceLocation("mb:textures/entity/watergolem"), WaterGolem.class, Ref.MODID+".watergolem", 0, MagicBooks.instance, 64, 1, true);
-
+        proxy.registerEntityRenders();
+        ModEntities.generateSpawnEgg();
     }
 
     @Mod.EventHandler

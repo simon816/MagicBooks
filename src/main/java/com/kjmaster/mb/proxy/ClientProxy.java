@@ -4,9 +4,14 @@ package com.kjmaster.mb.proxy;
  * Created by pbill_000 on 05/06/2017.
  */
 import com.kjmaster.mb.Ref;
+import com.kjmaster.mb.client.model.ModelWaterGolem;
+import com.kjmaster.mb.client.render.RenderWaterGolem;
+import com.kjmaster.mb.entities.WaterGolem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.*;
 
 
@@ -43,4 +48,8 @@ public class ClientProxy extends CommonProxy{
         super.serverStopping(event);
     }
 
+    @Override
+    public void registerEntityRenders() {
+        RenderingRegistry.registerEntityRenderingHandler(WaterGolem.class, new RenderWaterGolem(Minecraft.getMinecraft().getRenderManager(), new ModelWaterGolem(), 0.7F));
+    }
 }

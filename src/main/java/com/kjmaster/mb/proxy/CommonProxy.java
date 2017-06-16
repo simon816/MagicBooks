@@ -64,6 +64,6 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(IFireBlastManager.class, new FireBlastManagerStorage(), FireBlastManager.class);
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
-
+    public void registerEntityRenders(){}
 
 }

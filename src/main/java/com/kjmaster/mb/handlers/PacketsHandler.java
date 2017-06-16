@@ -21,7 +21,6 @@ import com.kjmaster.mb.util.LightningCooldown;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -240,9 +239,11 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
                             int theZ = MathHelper.floor(serverPlayer.posZ + z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             blocks.add(posInQuestion);
+
                         }
                     }
                 }
+
                 if (!blocks.isEmpty()) {
                     for(int i = 0; i < 45; i++){
                         for (EntityMob e:world.getEntities(EntityMob.class, new Predicate<EntityMob>() {
@@ -264,8 +265,7 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
 
                 }
             }
-        }
-        return null;
     }
-}
+        return null;
+}}
 
