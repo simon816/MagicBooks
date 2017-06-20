@@ -23,7 +23,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -36,7 +35,7 @@ import java.util.UUID;
 /**
  * Created by pbill_000 on 15/06/2017.
  */
-public class WaterGolem extends EntityTameable {
+public class WaterWolf extends EntityTameable {
     private static final DataParameter<Float> DATA_HEALTH_ID;
     private static final DataParameter<Boolean> BEGGING;
     private static final DataParameter<Integer> COLLAR_COLOR;
@@ -47,10 +46,15 @@ public class WaterGolem extends EntityTameable {
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
 
-    public WaterGolem(World worldIn) {
+    public WaterWolf(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 0.85F);
         this.setTamed(false);
+    }
+    public WaterWolf(World worldIn, EntityPlayer player) {
+        super(worldIn);
+        this.setSize(0.6F, 0.85F);
+        this.setTamedBy(player);
     }
 
     protected void initEntityAI() {
@@ -248,7 +252,7 @@ public class WaterGolem extends EntityTameable {
         if(this.isEntityInvulnerable(source)) {
             return false;
         } else {
-            Entity entity = source.getEntity();
+            Entity entity = source.getImmediateSource();
             if(this.aiSit != null) {
                 this.aiSit.setSitting(false);
             }
@@ -388,15 +392,15 @@ public class WaterGolem extends EntityTameable {
         this.dataManager.set(COLLAR_COLOR, Integer.valueOf(collarcolor.getDyeDamage()));
     }
 
-    public WaterGolem createChild(EntityAgeable ageable) {
-        WaterGolem waterGolem = new WaterGolem(this.world);
+    public WaterWolf createChild(EntityAgeable ageable) {
+        WaterWolf waterWolf = new WaterWolf(this.world);
         UUID uuid = this.getOwnerId();
         if(uuid != null) {
-            waterGolem.setOwnerId(uuid);
-            waterGolem.setTamed(true);
+            waterWolf.setOwnerId(uuid);
+            waterWolf.setTamed(true);
         }
 
-        return waterGolem;
+        return waterWolf;
     }
 
     public void setBegging(boolean beg) {
@@ -408,11 +412,11 @@ public class WaterGolem extends EntityTameable {
             return false;
         } else if(!this.isTamed()) {
             return false;
-        } else if(!(otherAnimal instanceof WaterGolem)) {
+        } else if(!(otherAnimal instanceof WaterWolf)) {
             return false;
         } else {
-            WaterGolem waterGolem = (WaterGolem) otherAnimal;
-            return !waterGolem.isTamed()?false:(waterGolem.isSitting()?false:this.isInLove() && waterGolem.isInLove());
+            WaterWolf waterWolf = (WaterWolf) otherAnimal;
+            return !waterWolf.isTamed()?false:(waterWolf.isSitting()?false:this.isInLove() && waterWolf.isInLove());
         }
     }
 
@@ -422,9 +426,9 @@ public class WaterGolem extends EntityTameable {
 
     public boolean shouldAttackEntity(EntityLivingBase p_142018_1_, EntityLivingBase p_142018_2_) {
         if(!(p_142018_1_ instanceof EntityCreeper) && !(p_142018_1_ instanceof EntityGhast)) {
-            if(p_142018_1_ instanceof WaterGolem) {
-                WaterGolem waterGolem = (WaterGolem) p_142018_1_;
-                if(waterGolem.isTamed() && waterGolem.getOwner() == p_142018_2_) {
+            if(p_142018_1_ instanceof WaterWolf) {
+                WaterWolf waterWolf = (WaterWolf) p_142018_1_;
+                if(waterWolf.isTamed() && waterWolf.getOwner() == p_142018_2_) {
                     return false;
                 }
             }
@@ -440,8 +444,8 @@ public class WaterGolem extends EntityTameable {
     }
 
     static {
-        DATA_HEALTH_ID = EntityDataManager.createKey(WaterGolem.class, DataSerializers.FLOAT);
-        BEGGING = EntityDataManager.createKey(WaterGolem.class, DataSerializers.BOOLEAN);
-        COLLAR_COLOR = EntityDataManager.createKey(WaterGolem.class, DataSerializers.VARINT);
+        DATA_HEALTH_ID = EntityDataManager.createKey(WaterWolf.class, DataSerializers.FLOAT);
+        BEGGING = EntityDataManager.createKey(WaterWolf.class, DataSerializers.BOOLEAN);
+        COLLAR_COLOR = EntityDataManager.createKey(WaterWolf.class, DataSerializers.VARINT);
     }
 }

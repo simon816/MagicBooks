@@ -1,13 +1,11 @@
 package com.kjmaster.mb.client.model;
 
-import com.kjmaster.mb.entities.WaterGolem;
+import com.kjmaster.mb.entities.WaterWolf;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Created by pbill_000 on 15/06/2017.
  */
 @SideOnly(Side.CLIENT)
-public class ModelWaterGolem extends ModelBase {
+public class ModelWaterWolf extends ModelBase {
     public ModelRenderer wolfHeadMain;
     public ModelRenderer wolfBody;
     public ModelRenderer wolfLeg1;
@@ -26,7 +24,7 @@ public class ModelWaterGolem extends ModelBase {
     ModelRenderer wolfTail;
     ModelRenderer wolfMane;
 
-    public ModelWaterGolem() {
+    public ModelWaterWolf() {
         float f = 0.0F;
         float f1 = 13.5F;
         this.wolfHeadMain = new ModelRenderer(this, 0, 0);
@@ -92,14 +90,14 @@ public class ModelWaterGolem extends ModelBase {
     }
 
     public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        WaterGolem waterGolem = (WaterGolem) entitylivingbaseIn;
-        if(waterGolem.isAngry()) {
+        WaterWolf waterWolf = (WaterWolf) entitylivingbaseIn;
+        if(waterWolf.isAngry()) {
             this.wolfTail.rotateAngleY = 0.0F;
         } else {
             this.wolfTail.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         }
 
-        if(waterGolem.isSitting()) {
+        if(waterWolf.isSitting()) {
             this.wolfMane.setRotationPoint(-1.0F, 16.0F, -3.0F);
             this.wolfMane.rotateAngleX = 1.2566371F;
             this.wolfMane.rotateAngleY = 0.0F;
@@ -130,10 +128,10 @@ public class ModelWaterGolem extends ModelBase {
             this.wolfLeg4.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         }
 
-        this.wolfHeadMain.rotateAngleZ = waterGolem.getInterestedAngle(partialTickTime) + waterGolem.getShakeAngle(partialTickTime, 0.0F);
-        this.wolfMane.rotateAngleZ = waterGolem.getShakeAngle(partialTickTime, -0.08F);
-        this.wolfBody.rotateAngleZ = waterGolem.getShakeAngle(partialTickTime, -0.16F);
-        this.wolfTail.rotateAngleZ = waterGolem.getShakeAngle(partialTickTime, -0.2F);
+        this.wolfHeadMain.rotateAngleZ = waterWolf.getInterestedAngle(partialTickTime) + waterWolf.getShakeAngle(partialTickTime, 0.0F);
+        this.wolfMane.rotateAngleZ = waterWolf.getShakeAngle(partialTickTime, -0.08F);
+        this.wolfBody.rotateAngleZ = waterWolf.getShakeAngle(partialTickTime, -0.16F);
+        this.wolfTail.rotateAngleZ = waterWolf.getShakeAngle(partialTickTime, -0.2F);
     }
 
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {

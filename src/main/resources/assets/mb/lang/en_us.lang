@@ -14,3 +14,5 @@ achievement.fireskillpoint.desc=You Earned A Fire Skill Point!
 
 achievement.waterskillpoint=Earn A Water Skill Point
 achievement.waterskillpoint.desc=You Earned A Water Skill Point!
+
+entity.mb_watergolem.name="Water Wolf"
