@@ -42,7 +42,7 @@ import java.util.List;
 public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
     @Override
     public IMessage onMessage(PointsPacket message, MessageContext ctx) {
-        EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
+        EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
         float amount = message.toSend;
         if (amount == 1) {
             IBoneMealManager BONEMEAL_UNLOCKED = serverPlayer.getCapability(BoneMealManagerProvider.SPELL_MANAGER_CAP, null);
