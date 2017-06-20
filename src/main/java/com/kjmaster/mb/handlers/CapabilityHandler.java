@@ -9,6 +9,7 @@ import com.kjmaster.mb.spellmanager.air.Invisibility.InvisibilityManagerProvider
 import com.kjmaster.mb.spellmanager.earth.bone.BoneMealManagerProvider;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManagerProvider;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
+import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +29,7 @@ public class CapabilityHandler {
     public static final ResourceLocation INVISIBILITY_MANAGER_CAP = new ResourceLocation(Ref.MODID, "InvisibilityUnlocked");
     public static final ResourceLocation LIGHTNING_MANAGER_CAP = new ResourceLocation(Ref.MODID, "LightningUnlocked");
     public static final ResourceLocation FIREBLAST_MANAGER_CAP = new ResourceLocation(Ref.MODID, "FireBlastUnlocked");
+    public static final ResourceLocation WATERWOLF_MANAGER_CAP = new ResourceLocation(Ref.MODID, "WaterWolfUnlocked");
     @SubscribeEvent
     public void  attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (!(event.getObject() instanceof EntityPlayer)) return;
@@ -39,5 +41,6 @@ public class CapabilityHandler {
             event.addCapability(INVISIBILITY_MANAGER_CAP, new InvisibilityManagerProvider());
             event.addCapability(LIGHTNING_MANAGER_CAP, new LightningManagerProvider());
             event.addCapability(FIREBLAST_MANAGER_CAP, new FireBlastManagerProvider());
+            event.addCapability(WATERWOLF_MANAGER_CAP, new WaterWolfManagerProvider());
     }
 }

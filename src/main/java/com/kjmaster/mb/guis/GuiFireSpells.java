@@ -16,6 +16,7 @@ public class GuiFireSpells extends GuiScreen {
     public static int height = 256;
     public static GuiButton a = new GuiButton(0, 150, 10, 175, 20, TextFormatting.RED + "Unlock fire blast spell (16 points)");
     public static  GuiButton b = new GuiButton(1, 150, 210, 175, 20,  TextFormatting.RED + "Close");
+    public static  GuiButton c = new GuiButton(2, 50, 235, 100, 20,  TextFormatting.BLUE + "Open water spells");
 
     @Override
     public void setGuiSize(int w, int h) {
@@ -38,6 +39,7 @@ public class GuiFireSpells extends GuiScreen {
     public void initGui() {
         this.buttonList.add(a);
         this.buttonList.add(b);
+        this.buttonList.add(c);
     }
 
     @Override
@@ -53,6 +55,9 @@ public class GuiFireSpells extends GuiScreen {
             this.mc.displayGuiScreen(null);
             if (this.mc.currentScreen == null)
                 this.mc.setIngameFocus();
+        }
+        if (button == c) {
+            this.mc.displayGuiScreen(new GuiWaterSpells());
         }
     }
 }

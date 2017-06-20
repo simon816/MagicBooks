@@ -3,11 +3,13 @@ package com.kjmaster.mb;
 /**
  * Created by pbill_000 on 05/06/2017.
  */
+import com.kjmaster.mb.client.ConfigHandler;
 import com.kjmaster.mb.events.CloneEvent;
 import com.kjmaster.mb.events.Tick;
 import com.kjmaster.mb.handlers.CapabilityHandler;
 import com.kjmaster.mb.handlers.LootHandler;
 import com.kjmaster.mb.init.ModCrafting;
+import com.kjmaster.mb.init.ModEntities;
 import com.kjmaster.mb.network.ModGuiHandler;
 import com.kjmaster.mb.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,6 +21,9 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+
 import static com.kjmaster.mb.proxy.CommonProxy.proxy;
 
 @Mod(modid = Ref.MODID, name=Ref.NAME, version=Ref.VERSION)
@@ -27,10 +32,19 @@ public class MagicBooks {
     @Mod.Instance
     public static MagicBooks instance;
 
+    private static File configDir;
+    public static File getConfigDir() {
+        return configDir;
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         LOGGER.info("Starting Pre-Initialization");
         proxy.preInit(event);
+        ModEntities.registerEntities();
+        configDir = new File(event.getModConfigurationDirectory() + "/" + Ref.MODID);
+        configDir.mkdirs();
+        ConfigHandler.init(new File(configDir.getPath(), Ref.MODID + ".cfg"));
     }
 
     @Mod.EventHandler
@@ -44,6 +58,8 @@ public class MagicBooks {
         MinecraftForge.EVENT_BUS.register(new Tick());
         CommonProxy.register();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagicBooks.instance, new ModGuiHandler());
+        proxy.registerEntityRenders();
+        ModEntities.generateSpawnEgg();
     }
 
     @Mod.EventHandler

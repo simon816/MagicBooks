@@ -6,6 +6,7 @@ import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.network.mbPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,12 +27,14 @@ public class KeyHandler {
     private static final KeyBinding INVIS_KEY = new KeyBinding("Invisiblity Spell", Keyboard.KEY_I, SECTION_NAME);
     private static final KeyBinding LIGHTNING_KEY = new KeyBinding("Lightning Spell", Keyboard.KEY_L, SECTION_NAME);
     private static final KeyBinding FIREBLAST_KEY = new KeyBinding("Fire Blast Spell", Keyboard.KEY_F, SECTION_NAME);
+    private static final KeyBinding WATERWOLF_KEY = new KeyBinding("Water Wolf Spell", Keyboard.KEY_NUMPAD1, SECTION_NAME);
     static {
         ClientRegistry.registerKeyBinding(SPELLGUI_KEY);
         ClientRegistry.registerKeyBinding(BONEMEAL_KEY);
         ClientRegistry.registerKeyBinding(INVIS_KEY);
         ClientRegistry.registerKeyBinding(LIGHTNING_KEY);
         ClientRegistry.registerKeyBinding(FIREBLAST_KEY);
+        ClientRegistry.registerKeyBinding(WATERWOLF_KEY);
     }
 
     @SubscribeEvent(receiveCanceled = false)
@@ -52,6 +55,9 @@ public class KeyHandler {
         }
         if(FIREBLAST_KEY.isPressed()) {
             mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(8));
+        }
+        if(WATERWOLF_KEY.isPressed()) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(10));
         }
     }
 }
