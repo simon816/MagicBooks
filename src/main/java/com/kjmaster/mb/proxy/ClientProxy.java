@@ -4,14 +4,15 @@ package com.kjmaster.mb.proxy;
  * Created by pbill_000 on 05/06/2017.
  */
 import com.kjmaster.mb.Ref;
+import com.kjmaster.mb.client.model.ModelWaterWolf;
+import com.kjmaster.mb.client.render.RenderWaterWolf;
+import com.kjmaster.mb.entities.WaterWolf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.*;
-
-import java.awt.*;
 
 
 public class ClientProxy extends CommonProxy{
@@ -47,4 +48,8 @@ public class ClientProxy extends CommonProxy{
         super.serverStopping(event);
     }
 
+    @Override
+    public void registerEntityRenders() {
+        RenderingRegistry.registerEntityRenderingHandler(WaterWolf.class, new RenderWaterWolf(Minecraft.getMinecraft().getRenderManager(), new ModelWaterWolf(), 0.7F));
+    }
 }

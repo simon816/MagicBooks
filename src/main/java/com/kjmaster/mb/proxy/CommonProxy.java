@@ -30,6 +30,9 @@ import com.kjmaster.mb.spellmanager.fire.fireblast.IFireBlastManager;
 import com.kjmaster.mb.spellmanager.air.lightning.ILightningManager;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManager;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerStorage;
+import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
+import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManager;
+import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerStorage;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import com.kjmaster.mb.Ref;
@@ -62,8 +65,9 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(IInvisibilityManager.class, new InvisibilityManagerStorage(), InvisibilityManager.class);
         CapabilityManager.INSTANCE.register(ILightningManager.class, new LightningManagerStorage(), LightningManager.class);
         CapabilityManager.INSTANCE.register(IFireBlastManager.class, new FireBlastManagerStorage(), FireBlastManager.class);
+        CapabilityManager.INSTANCE.register(IWaterWolfManager.class, new WaterWolfManagerStorage(), WaterWolfManager.class);
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
-
+    public void registerEntityRenders(){}
 
 }
