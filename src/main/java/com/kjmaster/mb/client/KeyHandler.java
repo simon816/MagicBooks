@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opencl.CL;
 
 import javax.annotation.Nonnull;
 
@@ -28,6 +29,8 @@ public class KeyHandler {
     private static final KeyBinding LIGHTNING_KEY = new KeyBinding("Lightning Spell", Keyboard.KEY_L, SECTION_NAME);
     private static final KeyBinding FIREBLAST_KEY = new KeyBinding("Fire Blast Spell", Keyboard.KEY_F, SECTION_NAME);
     private static final KeyBinding WATERWOLF_KEY = new KeyBinding("Water Wolf Spell", Keyboard.KEY_NUMPAD1, SECTION_NAME);
+    private static final KeyBinding WALLINGRUNE_KEY = new KeyBinding("Spawn Walling Rune Spell", Keyboard.KEY_NUMPAD4, SECTION_NAME);
+    private static final KeyBinding CLEARWALL_KEY = new KeyBinding("Clear Wall Spell", Keyboard.KEY_NUMPAD5, SECTION_NAME);
     static {
         ClientRegistry.registerKeyBinding(SPELLGUI_KEY);
         ClientRegistry.registerKeyBinding(BONEMEAL_KEY);
@@ -35,6 +38,8 @@ public class KeyHandler {
         ClientRegistry.registerKeyBinding(LIGHTNING_KEY);
         ClientRegistry.registerKeyBinding(FIREBLAST_KEY);
         ClientRegistry.registerKeyBinding(WATERWOLF_KEY);
+        ClientRegistry.registerKeyBinding(WALLINGRUNE_KEY);
+        ClientRegistry.registerKeyBinding(CLEARWALL_KEY);
     }
 
     @SubscribeEvent(receiveCanceled = false)
@@ -58,6 +63,12 @@ public class KeyHandler {
         }
         if(WATERWOLF_KEY.isPressed()) {
             mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(10));
+        }
+        if(WALLINGRUNE_KEY.isPressed()) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(12));
+        }
+        if(CLEARWALL_KEY.isPressed()) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(14));
         }
     }
 }

@@ -7,6 +7,8 @@ import com.kjmaster.mb.skillpoints.fire.FireSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.water.WaterSkillPointsProvider;
 import com.kjmaster.mb.spellmanager.air.Invisibility.InvisibilityManagerProvider;
 import com.kjmaster.mb.spellmanager.earth.bone.BoneMealManagerProvider;
+import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManagerProvider;
+import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManagerProvider;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManagerProvider;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
@@ -30,6 +32,8 @@ public class CapabilityHandler {
     public static final ResourceLocation LIGHTNING_MANAGER_CAP = new ResourceLocation(Ref.MODID, "LightningUnlocked");
     public static final ResourceLocation FIREBLAST_MANAGER_CAP = new ResourceLocation(Ref.MODID, "FireBlastUnlocked");
     public static final ResourceLocation WATERWOLF_MANAGER_CAP = new ResourceLocation(Ref.MODID, "WaterWolfUnlocked");
+    public static final ResourceLocation WALLINGRUNE_MANAGER_CAP = new ResourceLocation(Ref.MODID, "SpawnWallingRuneUnlocked");
+    public static final ResourceLocation CLEARWALL_MANAGER_CAP = new ResourceLocation(Ref.MODID, "ClearWallUnlocked");
     @SubscribeEvent
     public void  attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (!(event.getObject() instanceof EntityPlayer)) return;
@@ -42,5 +46,7 @@ public class CapabilityHandler {
             event.addCapability(LIGHTNING_MANAGER_CAP, new LightningManagerProvider());
             event.addCapability(FIREBLAST_MANAGER_CAP, new FireBlastManagerProvider());
             event.addCapability(WATERWOLF_MANAGER_CAP, new WaterWolfManagerProvider());
+            event.addCapability(WALLINGRUNE_MANAGER_CAP, new SpawnWallingRuneManagerProvider());
+            event.addCapability(CLEARWALL_MANAGER_CAP, new ClearWallManagerProvider());
     }
 }

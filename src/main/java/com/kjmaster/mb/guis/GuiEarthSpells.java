@@ -19,6 +19,8 @@ public class GuiEarthSpells extends GuiScreen {
     public static  GuiButton a = new GuiButton(0, 150, 10, 175, 20, TextFormatting.GREEN + "Unlock bonemeal spell (4 points)");
     public static  GuiButton b = new GuiButton(1, 175, 235, 100, 20,  TextFormatting.GREEN + "Close");
     public static  GuiButton c = new GuiButton(2, 50, 235, 100, 20,  TextFormatting.WHITE + "Open air spells");
+    public static GuiButton d = new GuiButton(3, 150, 50, 175, 20, TextFormatting.GREEN + "Unlock walling rune spell (16 points)");
+    public static GuiButton e = new GuiButton(4, 150, 90, 175, 20, TextFormatting.GREEN + "Unlock clear wall spell (1 point)");
 
 
     @Override
@@ -43,6 +45,8 @@ public class GuiEarthSpells extends GuiScreen {
         this.buttonList.add(a);
         this.buttonList.add(b);
         this.buttonList.add(c);
+        this.buttonList.add(d);
+        this.buttonList.add(e);
     }
 
     @Override
@@ -61,6 +65,12 @@ public class GuiEarthSpells extends GuiScreen {
         }
         if (button == c) {
             this.mc.displayGuiScreen(new GuiAirSpells());
+        }
+        if(button == d) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(11));
+        }
+        if(button == e) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(13));
         }
 
     }

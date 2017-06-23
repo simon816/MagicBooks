@@ -24,6 +24,12 @@ import com.kjmaster.mb.spellmanager.air.Invisibility.InvisibilityManagerStorage;
 import com.kjmaster.mb.spellmanager.earth.bone.BoneMealManager;
 import com.kjmaster.mb.spellmanager.earth.bone.BoneMealManagerStorage;
 import com.kjmaster.mb.spellmanager.earth.bone.IBoneMealManager;
+import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManager;
+import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManagerStorage;
+import com.kjmaster.mb.spellmanager.earth.clearwall.IClearWallManager;
+import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.ISpawnWallingRuneManager;
+import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManager;
+import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManagerStorage;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManager;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManagerStorage;
 import com.kjmaster.mb.spellmanager.fire.fireblast.IFireBlastManager;
@@ -66,6 +72,8 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(ILightningManager.class, new LightningManagerStorage(), LightningManager.class);
         CapabilityManager.INSTANCE.register(IFireBlastManager.class, new FireBlastManagerStorage(), FireBlastManager.class);
         CapabilityManager.INSTANCE.register(IWaterWolfManager.class, new WaterWolfManagerStorage(), WaterWolfManager.class);
+        CapabilityManager.INSTANCE.register(ISpawnWallingRuneManager.class, new SpawnWallingRuneManagerStorage(), SpawnWallingRuneManager.class);
+        CapabilityManager.INSTANCE.register(IClearWallManager.class, new ClearWallManagerStorage(), ClearWallManager.class);
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
     public void registerEntityRenders(){}

@@ -1,0 +1,16 @@
+item.earth_book.name=Книга Земли
+item.air_book.name=Книга Воздуха
+item.fire_book.name=Книга Огня
+item.water_book.name=Книга Воды
+
+achievement.earthskillpoint=Получить очко умений (Земля)
+achievement.earthskillpoint.desc=Вы получили новое очко умений - Земля!
+
+achievement.airskillpoint=Получить очко умений (Воздух)
+achievement.airskillpoint.desc=Вы получили новое очко умений - Воздух!
+
+achievement.fireskillpoint=Получить очко умений (Огонь)
+achievement.fireskillpoint.desc=Вы получили новое очко умений - Огонь!
+
+achievement.waterskillpoint=Получить очко умений (Вода)
+achievement.waterskillpoint.desc=Вы получили новое очко умений - Вода!

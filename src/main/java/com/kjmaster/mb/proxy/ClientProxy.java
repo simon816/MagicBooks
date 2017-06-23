@@ -7,6 +7,7 @@ import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.client.model.ModelWaterWolf;
 import com.kjmaster.mb.client.render.RenderWaterWolf;
 import com.kjmaster.mb.entities.WaterWolf;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -27,6 +28,8 @@ public class ClientProxy extends CommonProxy{
     public void registerModel(Item item) {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Ref.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
     }
+
+
 
     @Override
     public void init(FMLInitializationEvent event) {

@@ -1,6 +1,7 @@
 package com.kjmaster.mb.util;
 
 import com.kjmaster.mb.MagicBooks;
+import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.init.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,6 +21,8 @@ public class RegisterUtil {
         registerItems(event, ModItems.AirBook);
         registerItems(event, ModItems.FireBook);
         registerItems(event, ModItems.WaterBook);
+        registerBlocks(event, ModBlocks.wallingRuneBlock);
+        registerBlocks(event, ModBlocks.wallingBlock);
     }
 
     private static void registerBlocks(FMLPreInitializationEvent event, Block...blocks) {
