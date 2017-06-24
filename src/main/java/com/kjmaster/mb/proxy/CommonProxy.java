@@ -46,16 +46,12 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 
 import static com.kjmaster.mb.network.mbPacketHandler.INSTANCE;
-import static com.kjmaster.mb.util.RegisterUtil.registerAll;
 
 
 
 
 public class CommonProxy {
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        registerAll(event);
-    }
+    public void preInit(FMLPreInitializationEvent event) {}
     public void init(FMLInitializationEvent event) {}
     public void postInit(FMLPostInitializationEvent event) {}
     public void serverStarting(FMLServerStartingEvent event) {}

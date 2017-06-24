@@ -3,6 +3,9 @@ item.air_book.name=Book Of Air
 item.fire_book.name=Book Of Fire
 item.water_book.name=Book Of Water
 
+tile.wallingrune_block.name=Rune Of Walling
+tile.walling_block.name=Earth Wall Block
+
 achievement.earthskillpoint=Earn An Earth Skill Point
 achievement.earthskillpoint.desc=You Earned An Earth Skill Point!
 
@@ -16,3 +19,5 @@ achievement.waterskillpoint=Earn A Water Skill Point
 achievement.waterskillpoint.desc=You Earned A Water Skill Point!
 
 entity.mb_watergolem.name="Water Wolf"
+
+itemGroup.MagicBooks=Magic Books

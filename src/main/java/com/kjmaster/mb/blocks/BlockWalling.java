@@ -13,12 +13,12 @@ import java.util.Random;
  */
 public class BlockWalling extends BlockBase {
     public BlockWalling(String name,
-                        Material mat,
-                        CreativeTabs tab,
-                        float hardness,
-                        float resistance,
-                        String tool,
-                        int harvest) {
+                            Material mat,
+                            CreativeTabs tab,
+                            float hardness,
+                            float resistance,
+                            String tool,
+                            int harvest) {
         super(name, mat, tab, hardness, resistance, tool, harvest);
     }
 

@@ -373,7 +373,7 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 12) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
-        if (amount == 13) {
+        if (amount == 13 && isClearWallEnabled) {
             IEarthSkillPoints earthSkillPoints = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
             float points = earthSkillPoints.getEarthSkillPoints();
             IClearWallManager CLEARWALL_UNLOCKED1 = serverPlayer.getCapability(ClearWallManagerProvider.CLEAR_WALL_MANAGER_CAP, null);
@@ -395,8 +395,10 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
 
                 }
             }
+        }else if (amount == 13) {
+            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
-        if (amount == 14) {
+        if (amount == 14 && isClearWallEnabled) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "test1"));
             IClearWallManager CLEARWALL_UNLOCKED = serverPlayer.getCapability(ClearWallManagerProvider.CLEAR_WALL_MANAGER_CAP, null);
             float ClearWall = CLEARWALL_UNLOCKED.getClearWall();
@@ -788,6 +790,8 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
                     }
                 }
             }
+        } else if(amount == 14) {
+            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
         return null;
     }
