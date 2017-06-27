@@ -1,10 +1,12 @@
 package com.kjmaster.mb.init;
 
+import com.kjmaster.mb.blocks.BlockDrowningRune;
 import com.kjmaster.mb.blocks.BlockWalling;
 import com.kjmaster.mb.blocks.BlockWallingRune;
 import com.kjmaster.mb.creative.ModCreativeTab;
 import jline.internal.Preconditions;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -25,7 +27,7 @@ import java.util.Set;
 public class ModBlocks {
     public static final Block wallingRuneBlock = new BlockWallingRune(
             "wallingrune_block",
-            net.minecraft.block.material.Material.CARPET,
+            Material.CLOTH,
             ModCreativeTab.tabMagicBooks,
             1F,
             1F,
@@ -33,10 +35,18 @@ public class ModBlocks {
             1);
     public static final Block wallingBlock = new BlockWalling(
             "walling_block",
-            net.minecraft.block.material.Material.CARPET,
+            Material.CLOTH,
             ModCreativeTab.tabMagicBooks,
             0.01F,
             0.0001F,
+            "shears",
+            1);
+    public static final Block drowningRuneBlock = new BlockDrowningRune(
+            "drowningrune_block",
+            Material.CLOTH,
+            ModCreativeTab.tabMagicBooks,
+            1F,
+            1F,
             "shears",
             1);
     @Mod.EventBusSubscriber
@@ -47,6 +57,7 @@ public class ModBlocks {
             final IForgeRegistry<Block> registry = event.getRegistry();
             final Block[] blocks = {
                             wallingRuneBlock,
+                            drowningRuneBlock,
                             wallingBlock,
             };
             registry.registerAll(blocks);
@@ -59,6 +70,7 @@ public class ModBlocks {
         public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
             final ItemBlock[] items = {
                     new ItemBlock(wallingRuneBlock),
+                    new ItemBlock(drowningRuneBlock),
                     new ItemBlock(wallingBlock),
             };
 

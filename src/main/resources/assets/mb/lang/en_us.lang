@@ -4,6 +4,7 @@ item.fire_book.name=Book Of Fire
 item.water_book.name=Book Of Water
 
 tile.wallingrune_block.name=Rune Of Walling
+tile.drowningrune_block.name=Rune Of Drowning
 tile.walling_block.name=Earth Wall Block
 
 achievement.earthskillpoint=Earn An Earth Skill Point
