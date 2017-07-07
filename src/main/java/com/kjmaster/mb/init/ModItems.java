@@ -1,10 +1,7 @@
 package com.kjmaster.mb.init;
 
 import com.kjmaster.mb.creative.ModCreativeTab;
-import com.kjmaster.mb.items.ItemAirBook;
-import com.kjmaster.mb.items.ItemEarthBook;
-import com.kjmaster.mb.items.ItemFireBook;
-import com.kjmaster.mb.items.ItemWaterBook;
+import com.kjmaster.mb.items.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -25,6 +22,11 @@ public class ModItems {
     public static final Item AirBook = new ItemAirBook("air_book", ModCreativeTab.tabMagicBooks, 64 );
     public static final Item FireBook = new ItemFireBook("fire_book", ModCreativeTab.tabMagicBooks, 64 );
     public static final Item WaterBook = new ItemWaterBook("water_book", ModCreativeTab.tabMagicBooks, 64 );
+    public static final Item AirShard = new ItemAirShard("air_shard", ModCreativeTab.tabMagicBooks, 64);
+    public static final Item EarthShard = new ItemEarthShard("earth_shard", ModCreativeTab.tabMagicBooks, 64);
+    public static final Item FireShard = new ItemEarthShard("fire_shard", ModCreativeTab.tabMagicBooks, 64);
+    public static final Item WaterShard = new ItemEarthShard("water_shard", ModCreativeTab.tabMagicBooks, 64);
+
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
         public static final Set<Item> ITEMS = new HashSet<>();
@@ -36,6 +38,11 @@ public class ModItems {
                             AirBook,
                             FireBook,
                             WaterBook,
+                            AirShard,
+                            EarthShard,
+                            FireShard,
+                            WaterShard,
+
             };
             final IForgeRegistry<Item> registry = event.getRegistry();
             for(final Item item : items) {
