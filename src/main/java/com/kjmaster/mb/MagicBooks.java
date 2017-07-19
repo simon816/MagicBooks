@@ -59,7 +59,6 @@ public class MagicBooks {
         MinecraftForge.EVENT_BUS.register(new Tick());
         CommonProxy.register();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagicBooks.instance, new ModGuiHandler());
-        proxy.registerEntityRenders();
         ModEntities.generateSpawnEgg();
     }
 

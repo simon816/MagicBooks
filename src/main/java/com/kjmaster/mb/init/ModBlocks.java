@@ -1,9 +1,7 @@
 package com.kjmaster.mb.init;
 
 import com.kjmaster.mb.Ref;
-import com.kjmaster.mb.blocks.BlockDrowningRune;
-import com.kjmaster.mb.blocks.BlockWalling;
-import com.kjmaster.mb.blocks.BlockWallingRune;
+import com.kjmaster.mb.blocks.*;
 import com.kjmaster.mb.creative.ModCreativeTab;
 import jline.internal.Preconditions;
 import net.minecraft.block.Block;
@@ -52,6 +50,23 @@ public class ModBlocks {
             1F,
             "shears",
             1);
+    public static final Block airShardOre = new BlockAirShardOre(
+            "air_shard_ore",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooksOres,
+            5.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block earthShardOre = new BlockEarthShardOre(
+            "earth_shard_ore",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooksOres,
+            5.0F,
+            10.0F,
+            "pickaxe",
+            2);
+
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
         public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
@@ -63,6 +78,7 @@ public class ModBlocks {
                     wallingRuneBlock,
                     drowningRuneBlock,
                     wallingBlock,
+                    airShardOre,
             };
             registry.registerAll(blocks);
             for (final Block block : blocks) {
@@ -76,6 +92,7 @@ public class ModBlocks {
                     new ItemBlock(wallingRuneBlock),
                     new ItemBlock(drowningRuneBlock),
                     new ItemBlock(wallingBlock),
+                    new ItemBlock(airShardOre),
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();

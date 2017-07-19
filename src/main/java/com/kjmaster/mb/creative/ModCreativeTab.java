@@ -15,4 +15,10 @@ public class ModCreativeTab {
             return new ItemStack(ModItems.FireBook);
         }
     };
+    public static final CreativeTabs tabMagicBooksOres = new CreativeTabs("MagicBooksOres") {
+        @Override
+        public ItemStack getTabIconItem() {
+            return new ItemStack(ModBlocks.airShardOre);
+        }
+    };
 }

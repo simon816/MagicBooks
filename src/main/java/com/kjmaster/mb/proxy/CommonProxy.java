@@ -72,6 +72,5 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(IClearWallManager.class, new ClearWallManagerStorage(), ClearWallManager.class);
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
-    public void registerEntityRenders(){}
 
 }

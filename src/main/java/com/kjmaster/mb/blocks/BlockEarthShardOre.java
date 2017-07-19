@@ -1,6 +1,5 @@
 package com.kjmaster.mb.blocks;
 
-
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.init.ModItems;
 import net.minecraft.block.material.Material;
@@ -16,21 +15,21 @@ import java.util.Random;
 /**
  * Created by pbill_000 on 12/07/2017.
  */
-public class BlockAirShardOre extends BlockBase {
-    public BlockAirShardOre(String name,
-                        Material mat,
-                        CreativeTabs tab,
-                        float hardness,
-                        float resistance,
-                        String tool,
-                        int harvest) {
+public class BlockEarthShardOre extends BlockBase {
+    public BlockEarthShardOre(String name,
+                            Material mat,
+                            CreativeTabs tab,
+                            float hardness,
+                            float resistance,
+                            String tool,
+                            int harvest) {
         super(name, mat, tab, hardness, resistance, tool, harvest);
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ModItems.AirShard;
+        return ModItems.EarthShard;
     }
 
     @Override
@@ -53,6 +52,6 @@ public class BlockAirShardOre extends BlockBase {
 
     @Override
     protected ItemStack getSilkTouchDrop(IBlockState state) {
-        return new ItemStack(ModBlocks.airShardOre);
+        return new ItemStack(ModBlocks.earthShardOre);
     }
 }
