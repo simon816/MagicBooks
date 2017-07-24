@@ -3,6 +3,10 @@ package com.kjmaster.mb.handlers;
 import com.google.common.base.Predicate;
 import com.kjmaster.mb.blocks.BlockWallingRune;
 import com.kjmaster.mb.entities.WaterWolf;
+import com.kjmaster.mb.guis.GuiAirSpells;
+import com.kjmaster.mb.guis.GuiEarthSpells;
+import com.kjmaster.mb.guis.GuiFireSpells;
+import com.kjmaster.mb.guis.GuiWaterSpells;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.blocks.BlockWalling;
 import com.kjmaster.mb.network.PointsPacket;
@@ -29,12 +33,14 @@ import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
 import com.kjmaster.mb.util.LightningCooldown;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -395,7 +401,7 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
 
                 }
             }
-        }else if (amount == 13) {
+        } else if (amount == 13) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
         if (amount == 14 && isClearWallEnabled) {
@@ -609,189 +615,205 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
                     }
                     j = 0;
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y, z-i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y, z - i), Blocks.AIR.getDefaultState());
                         }
-                        block1 = world.getBlockState(new BlockPos(x,y, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        block1 = world.getBlockState(new BlockPos(x, y, z + i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y, z + i), Blocks.AIR.getDefaultState());
                         }
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 1;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 2;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 3;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 4;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 5;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 6;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 7;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 8;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 9;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 10;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 11;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 12;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 13;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                         j = 14;
                     }
                     for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x,y+j, z - i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
                         }
                         block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
                         }
                     }
                     for (int i = 1; i < 15; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y+i, z)).getBlock();
-                        if(block1 instanceof BlockWalling) {
+                        Block block1 = world.getBlockState(new BlockPos(x, y + i, z)).getBlock();
+                        if (block1 instanceof BlockWalling) {
                             world.setBlockState(new BlockPos(x, y + i, z), Blocks.AIR.getDefaultState());
                         }
                     }
                 }
             }
-        } else if(amount == 14) {
+        } else if (amount == 14) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
+        } if (amount == 15) {
+            IAirSkillPoints airSkillPoints = serverPlayer.getCapability(AirSkillPointsProvider.AIRSKILLPOINTS_CAP, null);
+             float points = airSkillPoints.getAirSkillPoints();
+             GuiAirSpells.airpoints = points;
+        } if (amount == 16) {
+            IEarthSkillPoints earthSkillPoints = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
+            float points = earthSkillPoints.getEarthSkillPoints();
+            GuiEarthSpells.earthpoints = points;
+        } if (amount == 17) {
+            IFireSkillPoints fireSkillPoints = serverPlayer.getCapability(FireSkillPointsProvider.FIRESKILLPOINTS_CAP, null);
+            float points = fireSkillPoints.getFireSkillPoints();
+            GuiFireSpells.firepoints = points;
+        } if (amount == 18) {
+            IWaterSkillPoints waterSkillPoints = serverPlayer.getCapability(WaterSkillPointsProvider.WATERSKILLPOINTS_CAP, null);
+            float points = waterSkillPoints.getWaterSkillPoints();
+            GuiWaterSpells.waterpoints = points;
         }
         return null;
     }

@@ -2,8 +2,12 @@ package com.kjmaster.mb.guis;
 
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.network.mbPacketHandler;
+import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
+import com.kjmaster.mb.skillpoints.air.IAirSkillPoints;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
@@ -12,21 +16,23 @@ import java.io.IOException;
  * Created by pbill_000 on 09/06/2017.
  */
 public class GuiAirSpells extends GuiScreen {
-    public static int width = 256;
-    public static int height = 256;
-    public static GuiButton a = new GuiButton(0, 150, 10, 175, 20, TextFormatting.WHITE + "Unlock invisibility spell (8 points)");
-    public static  GuiButton b = new GuiButton(1, 150, 210, 175, 20,  TextFormatting.WHITE + "Close");
-    public static GuiButton c = new GuiButton(2, 150, 50, 175, 20, TextFormatting.WHITE + "Unlock lightning spell (16 points");
+    public GuiButton a = new GuiButton(0, 145, 10, 190, 20, TextFormatting.WHITE + "Unlock invisibility spell (8 points)");
+    public GuiButton b = new GuiButton(1, 145, 210, 190, 20,  TextFormatting.WHITE + "Close");
+    public GuiButton c = new GuiButton(2, 145, 50, 190, 20, TextFormatting.WHITE + "Unlock lightning spell (16 points");
     public static  GuiButton d = new GuiButton(3, 50, 235, 100, 20,  TextFormatting.RED + "Open fire spells");
+    public static float airpoints = 0;
     @Override
     public void setGuiSize(int w, int h) {
 
-        super.setGuiSize(width, height);
+        super.setGuiSize(256, 256);
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
+        mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(15));
+        this.drawString(mc.fontRenderer,"You currently have " + airpoints, 5, 10, 16777215);
+        this.drawString(mc.fontRenderer, "air skill points", 5, 19, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

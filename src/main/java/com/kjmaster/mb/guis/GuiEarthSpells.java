@@ -14,24 +14,25 @@ import net.minecraft.util.text.TextFormatting;
  */
 
 public class GuiEarthSpells extends GuiScreen {
-    public static int width = 256;
-    public static int height = 256;
-    public static  GuiButton a = new GuiButton(0, 150, 10, 175, 20, TextFormatting.GREEN + "Unlock bonemeal spell (4 points)");
-    public static  GuiButton b = new GuiButton(1, 175, 235, 100, 20,  TextFormatting.GREEN + "Close");
+    public GuiButton a = new GuiButton(0, 145, 10, 190, 20, TextFormatting.GREEN + "Unlock bonemeal spell (4 points)");
+    public static  GuiButton b = new GuiButton(1, 145, 210, 190, 20,  TextFormatting.GREEN + "Close");
     public static  GuiButton c = new GuiButton(2, 50, 235, 100, 20,  TextFormatting.WHITE + "Open air spells");
-    public static GuiButton d = new GuiButton(3, 150, 50, 175, 20, TextFormatting.GREEN + "Unlock walling rune spell (16 points)");
-    public static GuiButton e = new GuiButton(4, 150, 90, 175, 20, TextFormatting.GREEN + "Unlock clear wall spell (1 point)");
-
+    public GuiButton d = new GuiButton(3, 145, 50, 190, 20, TextFormatting.GREEN + "Unlock walling rune spell (16 points)");
+    public GuiButton e = new GuiButton(4, 145, 90, 190, 20, TextFormatting.GREEN + "Unlock clear wall spell (1 point)");
+    public static float earthpoints;
 
     @Override
     public void setGuiSize(int w, int h) {
 
-        super.setGuiSize(width, height);
+        super.setGuiSize(256, 256);
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
+        mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(16));
+        this.drawString(mc.fontRenderer,"You currently have " + earthpoints, 5, 10, 65280);
+        this.drawString(mc.fontRenderer, "earth skill points", 5, 19, 65280);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

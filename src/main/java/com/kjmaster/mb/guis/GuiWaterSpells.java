@@ -12,18 +12,20 @@ import java.io.IOException;
  * Created by pbill_000 on 18/06/2017.
  */
 public class GuiWaterSpells extends GuiScreen {
-    public static int width = 256;
-    public static int height = 256;
-    public static GuiButton a = new GuiButton(0, 150, 10, 175, 20, TextFormatting.BLUE + "Unlock water wolf spell (16 points)");
-    public static  GuiButton b = new GuiButton(1, 150, 210, 175, 20,  TextFormatting.BLUE + "Close");
-
+    public GuiButton a = new GuiButton(0, 145, 10, 190, 20, TextFormatting.BLUE + "Unlock water wolf spell (16 points)");
+    public GuiButton b = new GuiButton(1, 145, 210, 190, 20,  TextFormatting.BLUE + "Close");
+    public static float waterpoints;
     @Override
     public void setGuiSize(int w, int h) {
-        super.setGuiSize(w, h);
+
+        super.setGuiSize(256, 256);
     }
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
+        mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(18));
+        this.drawString(mc.fontRenderer,"You currently have " + waterpoints, 5, 10, 255);
+        this.drawString(mc.fontRenderer, "water skill points", 5, 19, 255);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
