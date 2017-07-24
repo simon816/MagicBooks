@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "mb:air_book"
+    },
+    "title": {
+      "translate": "advancements.mb:airbook"
+    },
+    "description": {
+      "translate": "advancements.mb:airbook.desc"
+    }
+  },
+  "parent": "mb:root",
+  "criteria": {
+    "airbook_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "mb:air_book"
+          }
+        ]
+      }
+    }
+  }
+}

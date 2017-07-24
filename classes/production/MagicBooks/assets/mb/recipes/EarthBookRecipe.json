@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "mb:earth_book"
+  },
+  "pattern": [
+    "sss",
+    "sbs",
+    "sss"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "mb:earth_shard"
+    },
+	"b": {
+      "item": "minecraft:book"
+    }
+  }
+}

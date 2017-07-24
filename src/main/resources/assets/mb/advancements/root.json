@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "mb:water_shard"
+    },
+    "title": {
+      "translate": "itemGroup.MagicBooks"
+    },
+    "description": {
+      "translate": "advancements.mb:root.desc"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "shard_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "mb:air_shard"
+          },
+          {
+            "item": "mb:earth_shard"
+          },
+		  {
+            "item": "mb:fire_shard"
+          },
+          {
+            "item": "mb:water_shard"
+          }
+        ]
+      }
+    }
+  }
+}

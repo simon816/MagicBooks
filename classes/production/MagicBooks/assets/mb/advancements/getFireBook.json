@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "mb:fire_book"
+    },
+    "title": {
+      "translate": "advancements.mb:firebook"
+    },
+    "description": {
+      "translate": "advancements.mb:firebook.desc"
+    }
+  },
+  "parent": "mb:root",
+  "criteria": {
+    "firebook_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "mb:fire_book"
+          }
+        ]
+      }
+    }
+  }
+}

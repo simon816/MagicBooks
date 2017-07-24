@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "mb:water_book"
+    },
+    "title": {
+      "translate": "advancements.mb:waterbook"
+    },
+    "description": {
+      "translate": "advancements.mb:waterbook.desc"
+    }
+  },
+  "parent": "mb:root",
+  "criteria": {
+    "waterbook_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "mb:water_book"
+          }
+        ]
+      }
+    }
+  }
+}

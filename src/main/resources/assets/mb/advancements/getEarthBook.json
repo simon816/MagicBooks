@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "mb:earth_book"
+    },
+    "title": {
+      "translate": "advancements.mb:earthbook"
+    },
+    "description": {
+      "translate": "advancements.mb:earthbook.desc"
+    }
+  },
+  "parent": "mb:root",
+  "criteria": {
+    "earthbook_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "mb:earth_book"
+          }
+        ]
+      }
+    }
+  }
+}

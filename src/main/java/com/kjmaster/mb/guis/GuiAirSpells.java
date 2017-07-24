@@ -2,8 +2,8 @@ package com.kjmaster.mb.guis;
 
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.network.mbPacketHandler;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
