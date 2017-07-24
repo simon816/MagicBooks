@@ -14,10 +14,10 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 /**
- * Created by pbill_000 on 12/07/2017.
+ * Created by pbill_000 on 24/07/2017.
  */
-public class BlockEarthShardOre extends BlockBase {
-    public BlockEarthShardOre(String name,
+public class BlockFireShardOre extends BlockBase {
+    public BlockFireShardOre(String name,
                             Material mat,
                             CreativeTabs tab,
                             float hardness,
@@ -30,7 +30,7 @@ public class BlockEarthShardOre extends BlockBase {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ModItems.EarthShard;
+        return ModItems.FireShard;
     }
 
     @Override
@@ -58,6 +58,6 @@ public class BlockEarthShardOre extends BlockBase {
 
     @Override
     protected ItemStack getSilkTouchDrop(IBlockState state) {
-        return new ItemStack(ModBlocks.earthShardOre);
+        return new ItemStack(ModBlocks.fireShardOre);
     }
 }

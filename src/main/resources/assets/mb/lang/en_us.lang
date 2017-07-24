@@ -3,22 +3,21 @@ item.air_book.name=Book Of Air
 item.fire_book.name=Book Of Fire
 item.water_book.name=Book Of Water
 
+item.air_shard.name= Air Shard
+item.earth_shard.name= Earth Shard
+item.fire_shard.name= Fire Shard
+item.water_shard.name= Water Shard
+
 tile.wallingrune_block.name=Rune Of Walling
 tile.drowningrune_block.name=Rune Of Drowning
 tile.walling_block.name=Earth Wall Block
 
-achievement.earthskillpoint=Earn An Earth Skill Point
-achievement.earthskillpoint.desc=You Earned An Earth Skill Point!
-
-achievement.airskillpoint=Earn An Air Skill Point
-achievement.airskillpoint.desc=You Earned An Air Skill Point!
-
-achievement.fireskillpoint=Earn A Fire Skill Point
-achievement.fireskillpoint.desc=You Earned A Fire Skill Point!
-
-achievement.waterskillpoint=Earn A Water Skill Point
-achievement.waterskillpoint.desc=You Earned A Water Skill Point!
+tile.air_shard_ore.name=Air Shard Ore
+tile.earth_shard_ore.name=Earth Shard Ore
+tile.fire_shard_ore.name=Fire Shard Ore
+tile.water_shard_ore.name=Water Shard Ore
 
 entity.mb_watergolem.name="Water Wolf"
 
 itemGroup.MagicBooks=Magic Books
+itemGroup.MagicBooksOres=Magic Books Ores

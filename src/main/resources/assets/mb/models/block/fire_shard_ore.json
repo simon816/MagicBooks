@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+		"particle": "mb:blocks/fire_shard_ore",
+        "all": "mb:blocks/fire_shard_ore"
+    }
+}

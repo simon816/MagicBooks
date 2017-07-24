@@ -66,6 +66,22 @@ public class ModBlocks {
             10.0F,
             "pickaxe",
             2);
+    public static final Block fireShardOre = new BlockFireShardOre(
+            "fire_shard_ore",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooksOres,
+            5.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block waterShardOre = new BlockWaterShardOre(
+            "water_shard_ore",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooksOres,
+            5.0F,
+            10.0F,
+            "pickaxe",
+            2);
 
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
@@ -79,6 +95,9 @@ public class ModBlocks {
                     drowningRuneBlock,
                     wallingBlock,
                     airShardOre,
+                    earthShardOre,
+                    fireShardOre,
+                    waterShardOre,
             };
             registry.registerAll(blocks);
             for (final Block block : blocks) {
@@ -93,6 +112,10 @@ public class ModBlocks {
                     new ItemBlock(drowningRuneBlock),
                     new ItemBlock(wallingBlock),
                     new ItemBlock(airShardOre),
+                    new ItemBlock(earthShardOre),
+                    new ItemBlock(fireShardOre),
+                    new ItemBlock(waterShardOre),
+
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -111,6 +134,10 @@ public class ModBlocks {
                 wallingRuneBlock,
                 drowningRuneBlock,
                 wallingBlock,
+                airShardOre,
+                earthShardOre,
+                fireShardOre,
+                waterShardOre,
         };
         for(final Block block: blocks) {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Ref.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));;
@@ -119,6 +146,10 @@ public class ModBlocks {
                 new ItemBlock(wallingRuneBlock),
                 new ItemBlock(drowningRuneBlock),
                 new ItemBlock(wallingBlock),
+                new ItemBlock(airShardOre),
+                new ItemBlock(earthShardOre),
+                new ItemBlock(fireShardOre),
+                new ItemBlock(waterShardOre),
         };
         for(final ItemBlock item : items) {
             final Block block = item.getBlock();

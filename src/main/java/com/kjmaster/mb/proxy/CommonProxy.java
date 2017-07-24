@@ -39,10 +39,12 @@ import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerStorage;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerStorage;
+import com.kjmaster.mb.worldgen.OreGen;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import com.kjmaster.mb.Ref;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 import static com.kjmaster.mb.network.mbPacketHandler.INSTANCE;
@@ -52,7 +54,9 @@ import static com.kjmaster.mb.network.mbPacketHandler.INSTANCE;
 
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {}
-    public void init(FMLInitializationEvent event) {}
+    public void init(FMLInitializationEvent event) {
+        GameRegistry.registerWorldGenerator(new OreGen(), 0);
+    }
     public void postInit(FMLPostInitializationEvent event) {}
     public void serverStarting(FMLServerStartingEvent event) {}
     public void serverStopping(FMLServerStoppingEvent event) {}

@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import java.util.Random;
 
@@ -35,7 +36,12 @@ public class BlockAirShardOre extends BlockBase {
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        return 2 + random.nextInt(2);
+        return 4 + random.nextInt(2);
+    }
+
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
     }
 
     @Override
