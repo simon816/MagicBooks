@@ -4,6 +4,30 @@ package com.kjmaster.mb.proxy;
  * Created by pbill_000 on 05/06/2017.
  */
 
+import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpell;
+import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellStorage;
+import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
+import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2;
+import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2Storage;
+import com.kjmaster.mb.chosenspells.chosenspell2.IChosenSpell2;
+import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3;
+import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3Storage;
+import com.kjmaster.mb.chosenspells.chosenspell3.IChosenSpell3;
+import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4;
+import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4Storage;
+import com.kjmaster.mb.chosenspells.chosenspell4.IChosenSpell4;
+import com.kjmaster.mb.chosenspells.chosenspell5.ChosenSpell5;
+import com.kjmaster.mb.chosenspells.chosenspell5.ChosenSpell5Storage;
+import com.kjmaster.mb.chosenspells.chosenspell5.IChosenSpell5;
+import com.kjmaster.mb.chosenspells.chosenspell6.ChosenSpell6;
+import com.kjmaster.mb.chosenspells.chosenspell6.ChosenSpell6Storage;
+import com.kjmaster.mb.chosenspells.chosenspell6.IChosenSpell6;
+import com.kjmaster.mb.chosenspells.chosenspell7.ChosenSpell7;
+import com.kjmaster.mb.chosenspells.chosenspell7.ChosenSpell7Storage;
+import com.kjmaster.mb.chosenspells.chosenspell7.IChosenSpell7;
+import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8;
+import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Storage;
+import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.handlers.PacketsHandler;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPoints;
@@ -27,9 +51,6 @@ import com.kjmaster.mb.spellmanager.earth.bone.IBoneMealManager;
 import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManager;
 import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManagerStorage;
 import com.kjmaster.mb.spellmanager.earth.clearwall.IClearWallManager;
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.ISpawnWallingRuneManager;
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManager;
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManagerStorage;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManager;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManagerStorage;
 import com.kjmaster.mb.spellmanager.fire.fireblast.IFireBlastManager;
@@ -72,9 +93,21 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(ILightningManager.class, new LightningManagerStorage(), LightningManager.class);
         CapabilityManager.INSTANCE.register(IFireBlastManager.class, new FireBlastManagerStorage(), FireBlastManager.class);
         CapabilityManager.INSTANCE.register(IWaterWolfManager.class, new WaterWolfManagerStorage(), WaterWolfManager.class);
-        CapabilityManager.INSTANCE.register(ISpawnWallingRuneManager.class, new SpawnWallingRuneManagerStorage(), SpawnWallingRuneManager.class);
         CapabilityManager.INSTANCE.register(IClearWallManager.class, new ClearWallManagerStorage(), ClearWallManager.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell.class, new ChosenSpellStorage(), ChosenSpell.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell2.class, new ChosenSpell2Storage(), ChosenSpell2.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell3.class, new ChosenSpell3Storage(), ChosenSpell3.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell4.class, new ChosenSpell4Storage(), ChosenSpell4.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell5.class, new ChosenSpell5Storage(), ChosenSpell5.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell6.class, new ChosenSpell6Storage(), ChosenSpell6.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell7.class, new ChosenSpell7Storage(), ChosenSpell7.class);
+        CapabilityManager.INSTANCE.register(IChosenSpell8.class, new ChosenSpell8Storage(), ChosenSpell8.class);
+
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
+    }
+
+    public void registerModelBakeryVariants() {
+
     }
 
 }

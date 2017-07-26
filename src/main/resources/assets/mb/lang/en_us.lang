@@ -8,6 +8,16 @@ item.earth_shard.name= Earth Shard
 item.fire_shard.name= Fire Shard
 item.water_shard.name= Water Shard
 
+item.magicbook.nospell.name=Magic Book
+item.magicbook.spell1.name=Spell 1
+item.magicbook.spell2.name=Spell 2
+item.magicbook.spell3.name=Spell 3
+item.magicbook.spell4.name=Spell 4
+item.magicbook.spell5.name=Spell 5
+item.magicbook.spell6.name=Spell 6
+item.magicbook.spell7.name=Spell 7
+item.magicbook.spell8.name=Spell 8
+
 tile.wallingrune_block.name=Rune Of Walling
 tile.drowningrune_block.name=Rune Of Drowning
 tile.walling_block.name=Earth Wall Block

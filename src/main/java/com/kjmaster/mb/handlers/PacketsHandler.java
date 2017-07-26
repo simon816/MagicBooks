@@ -1,14 +1,28 @@
 package com.kjmaster.mb.handlers;
 
-import com.google.common.base.Predicate;
-import com.kjmaster.mb.blocks.BlockWallingRune;
-import com.kjmaster.mb.entities.WaterWolf;
-import com.kjmaster.mb.guis.GuiAirSpells;
-import com.kjmaster.mb.guis.GuiEarthSpells;
-import com.kjmaster.mb.guis.GuiFireSpells;
-import com.kjmaster.mb.guis.GuiWaterSpells;
-import com.kjmaster.mb.init.ModBlocks;
-import com.kjmaster.mb.blocks.BlockWalling;
+import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellProvider;
+import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
+import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2Provider;
+import com.kjmaster.mb.chosenspells.chosenspell2.IChosenSpell2;
+import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3;
+import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3Provider;
+import com.kjmaster.mb.chosenspells.chosenspell3.IChosenSpell3;
+import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4;
+import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4Provider;
+import com.kjmaster.mb.chosenspells.chosenspell4.IChosenSpell4;
+import com.kjmaster.mb.chosenspells.chosenspell5.ChosenSpell5Provider;
+import com.kjmaster.mb.chosenspells.chosenspell5.IChosenSpell5;
+import com.kjmaster.mb.chosenspells.chosenspell6.ChosenSpell6Provider;
+import com.kjmaster.mb.chosenspells.chosenspell6.IChosenSpell6;
+import com.kjmaster.mb.chosenspells.chosenspell7.ChosenSpell7Provider;
+import com.kjmaster.mb.chosenspells.chosenspell7.IChosenSpell7;
+import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Provider;
+import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
+import com.kjmaster.mb.guis.spellunlock.GuiAirSpells;
+import com.kjmaster.mb.guis.spellunlock.GuiEarthSpells;
+import com.kjmaster.mb.guis.spellunlock.GuiFireSpells;
+import com.kjmaster.mb.guis.spellunlock.GuiWaterSpells;
+import com.kjmaster.mb.init.ModItems;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.earth.EarthSkillPointsProvider;
@@ -24,42 +38,19 @@ import com.kjmaster.mb.spellmanager.air.Invisibility.IInvisibilityManager;
 import com.kjmaster.mb.spellmanager.air.Invisibility.InvisibilityManagerProvider;
 import com.kjmaster.mb.spellmanager.earth.clearwall.ClearWallManagerProvider;
 import com.kjmaster.mb.spellmanager.earth.clearwall.IClearWallManager;
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.ISpawnWallingRuneManager;
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.SpawnWallingRuneManagerProvider;
 import com.kjmaster.mb.spellmanager.fire.fireblast.FireBlastManagerProvider;
 import com.kjmaster.mb.spellmanager.fire.fireblast.IFireBlastManager;
 import com.kjmaster.mb.spellmanager.air.lightning.ILightningManager;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
-import com.kjmaster.mb.util.LightningCooldown;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockFire;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockStateBase;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.kjmaster.mb.client.ConfigHandler.*;
 
@@ -87,31 +78,13 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
                     float points2 = earthSkillPoints2.getEarthSkillPoints();
                     float BoneMeal2 = BONEMEAL_UNLOCKED.getBonemeal();
                     if (BoneMeal2 == 1) {
-                        serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You unlocked the bonemeal spell!"));
+                        serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You unlocked the Bonemeal spell!"));
                         serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You now have " + points2 + " earth skill points"));
                     }
 
                 }
             }
         } else if (amount == 1) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
-        }
-        if (amount == 2 && isBonemealEnabled) {
-            IBoneMealManager BONEMEAL_UNLOCKED = serverPlayer.getCapability(BoneMealManagerProvider.SPELL_MANAGER_CAP, null);
-            float BoneMeal = BONEMEAL_UNLOCKED.getBonemeal();
-            if (BoneMeal == 1) {
-                RayTraceResult lastPosition = serverPlayer.rayTrace(100, 1.0F);
-                BlockPos pos = lastPosition.getBlockPos();
-                Block block = serverPlayer.world.getBlockState(pos).getBlock();
-                if ((block instanceof IGrowable || block instanceof IPlantable)) {
-                    for (int i = 0; i < 21; i++) {
-                        block.updateTick(serverPlayer.world, pos, serverPlayer.world.getBlockState(pos), serverPlayer.world.rand);
-                    }
-
-
-                }
-            }
-        } else if (amount == 2) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
         if (amount == 3 && isInvisibilityEnabled) {
@@ -140,21 +113,6 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 3) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "This spell has been disabled!"));
         }
-        if (amount == 4 && isInvisibilityEnabled) {
-            IInvisibilityManager INVIS_UNLOCKED = serverPlayer.getCapability(InvisibilityManagerProvider.INVISIBILITY_MANAGER_CAP, null);
-            float Invis = INVIS_UNLOCKED.getInvisibility();
-            if (Invis == 1) {
-                if (serverPlayer.isInvisible()) {
-                    serverPlayer.setInvisible(false);
-                } else {
-                    serverPlayer.setInvisible(true);
-                }
-
-            }
-
-        } else if (amount == 4) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "This spell has been disabled!"));
-        }
         if (amount == 5 && isLightningEnabled) {
             IAirSkillPoints airSkillPoints = serverPlayer.getCapability(AirSkillPointsProvider.AIRSKILLPOINTS_CAP, null);
             float points = airSkillPoints.getAirSkillPoints();
@@ -181,55 +139,6 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 5) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "This spell has been disabled!"));
         }
-        if (amount == 6 && isLightningEnabled) {
-            if (LightningCooldown.LightningCooldown <= 0) {
-                LightningCooldown.LightningCooldown = configuredLightningCooldown;
-                ILightningManager LIGHTNING_UNLOCKED = serverPlayer.getCapability(LightningManagerProvider.LIGHTNING_MANAGER_CAPABILITY, null);
-                float Lightning = LIGHTNING_UNLOCKED.getLightning();
-                if (Lightning == 1) {
-                    serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "LIGHTNING BOLT!"));
-                    List<BlockPos> blocks = new ArrayList<BlockPos>();
-                    int range = 10;
-                    for (int x = -range; x < range + 1; x++) {
-                        for (int z = -range; z < range + 1; z++) {
-                            for (int y = -range; y < range + 1; y++) {
-                                int theX = MathHelper.floor(serverPlayer.posX + x);
-                                int theY = MathHelper.floor(serverPlayer.posY + y);
-                                int theZ = MathHelper.floor(serverPlayer.posZ + z);
-                                BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
-                                blocks.add(posInQuestion);
-                            }
-                        }
-                    }
-                    if (!blocks.isEmpty()) {
-                        for (int i = 0; i < 45; i++) {
-                            World world = serverPlayer.world;
-                            for (EntityMob e : world.getEntities(EntityMob.class, new Predicate<EntityMob>() {
-
-                                @Override
-                                public boolean apply(EntityMob input) {
-                                    return (input.getDistanceToEntity(serverPlayer) <= 20);
-                                }
-                            })) {
-                                BlockPos pos = e.getPosition();
-                                double x = pos.getX();
-                                double y = pos.getY();
-                                double z = pos.getZ();
-                                world.addWeatherEffect(new EntityLightningBolt(world, x, y, z, true));
-
-                            }
-                        }
-
-                    }
-                }
-            } else {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "ticks left on cooldown: " + LightningCooldown.LightningCooldown));
-            }
-        } else if (amount == 6) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.WHITE + "This spell has been disabled!"));
-        }
-
-
         if (amount == 7 && isFireBlastEnabled) {
             IFireSkillPoints fireSkillPoints = serverPlayer.getCapability(FireSkillPointsProvider.FIRESKILLPOINTS_CAP, null);
             float points = fireSkillPoints.getFireSkillPoints();
@@ -254,52 +163,6 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
             }
 
         } else if (amount == 7) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + "This spell has been disabled!"));
-        }
-        if (amount == 8 && isFireBlastEnabled) {
-            IFireBlastManager FIREBLAST_UNLOCKED = serverPlayer.getCapability(FireBlastManagerProvider.FIREBLAST_MANAGER_CAP, null);
-            float FireBlast = FIREBLAST_UNLOCKED.getFireBlast();
-            if (FireBlast == 1) {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + "FIRE BLAST!"));
-                EntityPlayer player = serverPlayer;
-                World world = player.world;
-                List<BlockPos> blocks = new ArrayList<BlockPos>();
-                int range = 10;
-                for (int x = -range; x < range + 1; x++) {
-                    for (int z = -range; z < range + 1; z++) {
-                        for (int y = -range; y < range + 1; y++) {
-                            int theX = MathHelper.floor(serverPlayer.posX + x);
-                            int theY = MathHelper.floor(serverPlayer.posY + y);
-                            int theZ = MathHelper.floor(serverPlayer.posZ + z);
-                            BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
-                            blocks.add(posInQuestion);
-
-                        }
-                    }
-                }
-
-                if (!blocks.isEmpty()) {
-                    for (int i = 0; i < 45; i++) {
-                        for (EntityMob e : world.getEntities(EntityMob.class, new Predicate<EntityMob>() {
-
-                            @Override
-                            public boolean apply(EntityMob input) {
-                                return (input.getDistanceToEntity(serverPlayer) <= 20);
-                            }
-                        })) {
-                            BlockPos pos = e.getPosition();
-                            double x = pos.getX();
-                            double y = pos.getY();
-                            double z = pos.getZ();
-                            e.setFire(20);
-                            e.attackEntityFrom(new DamageSource("magic"), 2F);
-
-                        }
-                    }
-
-                }
-            }
-        } else if (amount == 8) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + "This spell has been disabled!"));
         }
         if (amount == 9 && isWaterWolfEnabled) {
@@ -327,58 +190,6 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 9) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.BLUE + "This spell has been disabled!"));
         }
-        if (amount == 10 && isWaterWolfEnabled) {
-            IWaterWolfManager WATERWOLF_UNLOCKED1 = serverPlayer.getCapability(WaterWolfManagerProvider.WATERWOLF_MANAGER_CAP, null);
-            float WaterWolf = WATERWOLF_UNLOCKED1.getWaterWolf();
-            if (WaterWolf < (maxWaterWolves + 1) && WaterWolf >= 1) {
-                EntityPlayer player = serverPlayer;
-                World world2 = serverPlayer.getServerWorld();
-                com.kjmaster.mb.entities.WaterWolf waterWolf = new WaterWolf(world2, player);
-                waterWolf.setLocationAndAngles(serverPlayer.posX, serverPlayer.posY, serverPlayer.posZ, 0F, 0F);
-                world2.spawnEntity(waterWolf);
-                WATERWOLF_UNLOCKED1.addWaterWolf(1);
-
-            } else {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.BLUE + "You can only spawn 10 water wolves per world, make sure you breed them for more!"));
-            }
-
-        } else if (amount == 10) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.BLUE + "This spell has been disabled!"));
-        }
-        if (amount == 11 && isWallingRuneEnabled) {
-            IEarthSkillPoints earthSkillPoints = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
-            float points = earthSkillPoints.getEarthSkillPoints();
-            ISpawnWallingRuneManager WALLINGRUNE_UNLOCKED1 = serverPlayer.getCapability(SpawnWallingRuneManagerProvider.WALLING_RUNE_MANAGER_CAP, null);
-            float WallingRune = WALLINGRUNE_UNLOCKED1.getWallingRune();
-            if (points < 16 && WallingRune == 0) {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You need 16 earth skill points for this spell!"));
-
-            } else {
-                if (WallingRune == 0) {
-                    WALLINGRUNE_UNLOCKED1.addWallingRune(1);
-                    IEarthSkillPoints earthSkillPoints1 = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
-                    earthSkillPoints1.consumeEarth(16);
-                    float points2 = earthSkillPoints1.getEarthSkillPoints();
-                    float WallingRune2 = WALLINGRUNE_UNLOCKED1.getWallingRune();
-                    if (WallingRune2 == 1) {
-                        serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You unlocked the spawn walling rune spell!"));
-                        serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "You now have " + points2 + " earth skill points"));
-                    }
-
-                }
-            }
-        } else if (amount == 11) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
-        }
-        if (amount == 12 && isWallingRuneEnabled) {
-            ISpawnWallingRuneManager WALLINGRUNE_UNLOCKED = serverPlayer.getCapability(SpawnWallingRuneManagerProvider.WALLING_RUNE_MANAGER_CAP, null);
-            float WallingRune = WALLINGRUNE_UNLOCKED.getWallingRune();
-            if (WallingRune == 1) {
-                serverPlayer.addItemStackToInventory(new ItemStack(ModBlocks.wallingRuneBlock, 1, 0));
-            }
-        } else if (amount == 12) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
-        }
         if (amount == 13 && isClearWallEnabled) {
             IEarthSkillPoints earthSkillPoints = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
             float points = earthSkillPoints.getEarthSkillPoints();
@@ -404,401 +215,7 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 13) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
-        if (amount == 14 && isClearWallEnabled) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "test1"));
-            IClearWallManager CLEARWALL_UNLOCKED = serverPlayer.getCapability(ClearWallManagerProvider.CLEAR_WALL_MANAGER_CAP, null);
-            float ClearWall = CLEARWALL_UNLOCKED.getClearWall();
-            if (ClearWall == 1) {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "test2"));
-                EntityPlayer player = serverPlayer;
-                World world = player.world;
-                RayTraceResult lastPosition = serverPlayer.rayTrace(100, 1.0F);
-                BlockPos pos = lastPosition.getBlockPos();
-                Block block = serverPlayer.world.getBlockState(pos).getBlock();
-                if ((block instanceof BlockWallingRune)) {
-                    double x = pos.getX();
-                    double y = pos.getY();
-                    double z = pos.getZ();
-                    int j = 0;
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y, z), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 1;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 2;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 3;
-
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 4;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 5;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 6;
-
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 7;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 8;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 9;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 10;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 11;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 12;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 13;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        j = 14;
-                    }
-                    for (int i = 1; i < 16; i++) {
-
-                        Block block1 = world.getBlockState(new BlockPos(x - i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x - i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x + i, y + j, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x + i, y + j, z), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                    for (int i = 1; i < 15; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + i, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + i, z), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                    j = 0;
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y, z + i), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 1;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 2;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 3;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 4;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 5;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 6;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 7;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 8;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 9;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 10;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 11;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 12;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 13;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                        j = 14;
-                    }
-                    for (int i = 1; i < 16; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + j, z - i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z - i), Blocks.AIR.getDefaultState());
-                        }
-                        block1 = world.getBlockState(new BlockPos(x, y + j, z + i)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + j, z + i), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                    for (int i = 1; i < 15; i++) {
-                        Block block1 = world.getBlockState(new BlockPos(x, y + i, z)).getBlock();
-                        if (block1 instanceof BlockWalling) {
-                            world.setBlockState(new BlockPos(x, y + i, z), Blocks.AIR.getDefaultState());
-                        }
-                    }
-                }
-            }
-        } else if (amount == 14) {
-            serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
-        } if (amount == 15) {
+        if (amount == 15) {
             IAirSkillPoints airSkillPoints = serverPlayer.getCapability(AirSkillPointsProvider.AIRSKILLPOINTS_CAP, null);
              float points = airSkillPoints.getAirSkillPoints();
              GuiAirSpells.airpoints = points;
@@ -814,6 +231,206 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
             IWaterSkillPoints waterSkillPoints = serverPlayer.getCapability(WaterSkillPointsProvider.WATERSKILLPOINTS_CAP, null);
             float points = waterSkillPoints.getWaterSkillPoints();
             GuiWaterSpells.waterpoints = points;
+        } if (amount == 19) {
+            if (serverPlayer.getHeldItemMainhand().getItem() == ModItems.MagicBook) {
+                int meta = serverPlayer.getHeldItemMainhand().getItemDamage();
+                switch (meta) {
+                    case 0:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 1));
+                        break;
+                    case 1:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 2));
+                        break;
+                    case 2:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 3));
+                        break;
+                    case 3:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 4));
+                        break;
+                    case 4:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 5));
+                        break;
+                    case 5:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 6));
+                        break;
+                    case 6:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 7));
+                        break;
+                    case 7:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 8));
+                        break;
+                    case 8:
+                        serverPlayer.getHeldItemMainhand().shrink(1);
+                        serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 0));
+                        break;
+
+                }
+            }
+        // chosen spell 1
+        } if (amount == 20) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("bonemeal");
+        } if (amount == 21) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("clearwall");
+        } if (amount == 22) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("invisibility");
+        } if (amount == 23) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("lightning");
+        } if (amount == 24) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("fireblast");
+        } if (amount == 25) {
+            IChosenSpell ChosenSpell = serverPlayer.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            ChosenSpell.setChosenSpell("waterwolf");
+        // chosen spell 2
+        } if (amount == 26) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("bonemeal");
+        } if (amount == 27) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("clearwall");
+        } if (amount == 28) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("invisibility");
+        } if (amount == 29) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("lightning");
+        } if (amount == 30) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("fireblast");
+        } if (amount == 31) {
+            IChosenSpell2 ChosenSpell2 = serverPlayer.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            ChosenSpell2.setChosenSpell2("waterwolf");
+        // chosen spell 3
+        } if (amount == 32) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("bonemeal");
+        } if (amount == 33) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("clearwall");
+        } if (amount == 34) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("invisibility");
+        } if (amount == 35) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("lightning");
+        } if (amount == 36) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("fireblast");
+        } if (amount == 37) {
+            IChosenSpell3 ChosenSpell3 = serverPlayer.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            ChosenSpell3.setChosenSpell3("waterwolf");
+        }
+        // chosen spell 4
+        if (amount == 38) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("bonemeal");
+        } if (amount == 39) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("clearwall");
+        } if (amount == 40) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("invisibility");
+        } if (amount == 41) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("lightning");
+        } if (amount == 42) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("fireblast");
+        } if (amount == 43) {
+            IChosenSpell4 ChosenSpell4 = serverPlayer.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            ChosenSpell4.setChosenSpell4("waterwolf");
+        }
+        // chosen spell 5
+        if (amount == 44) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("bonemeal");
+        } if (amount == 45) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("clearwall");
+        } if (amount == 46) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("invisibility");
+        } if (amount == 47) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("lightning");
+        } if (amount == 48) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("fireblast");
+        } if (amount == 49) {
+            IChosenSpell5 ChosenSpell5 = serverPlayer.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            ChosenSpell5.setChosenSpell5("waterwolf");
+        }
+        // chosen spell 6
+        if (amount == 50) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("bonemeal");
+        } if (amount == 51) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("clearwall");
+        } if (amount == 52) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("invisibility");
+        } if (amount == 53) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("lightning");
+        } if (amount == 54) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("fireblast");
+        } if (amount == 55) {
+            IChosenSpell6 ChosenSpell6 = serverPlayer.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            ChosenSpell6.setChosenSpell6("waterwolf");
+        }
+        // chosen spell 7
+        if (amount == 56) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("bonemeal");
+        } if (amount == 57) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("clearwall");
+        } if (amount == 58) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("invisibility");
+        } if (amount == 59) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("lightning");
+        } if (amount == 60) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("fireblast");
+        } if (amount == 61) {
+            IChosenSpell7 ChosenSpell7 = serverPlayer.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            ChosenSpell7.setChosenSpell7("waterwolf");
+        }
+        // chosen spell 8
+        if (amount == 62) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("bonemeal");
+        } if (amount == 63) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("clearwall");
+        } if (amount == 64) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("invisibility");
+        } if (amount == 65) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("lightning");
+        } if (amount == 66) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("fireblast");
+        } if (amount == 67) {
+            IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            ChosenSpell8.setChosenSpell8("waterwolf");
         }
         return null;
     }

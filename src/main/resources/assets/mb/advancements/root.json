@@ -1,37 +1,66 @@
 {
-  "display": {
-    "icon": {
-      "item": "mb:water_shard"
-    },
-    "title": {
-      "translate": "itemGroup.MagicBooks"
-    },
-    "description": {
-      "translate": "advancements.mb:root.desc"
-    },
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
-    "show_toast": true,
-    "announce_to_chat": true
-  },
-  "criteria": {
-    "shard_in_inventory": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "mb:air_shard"
-          },
-          {
-            "item": "mb:earth_shard"
-          },
-		  {
-            "item": "mb:fire_shard"
-          },
-          {
-            "item": "mb:water_shard"
-          }
-        ]
-      }
-    }
-  }
+	"display": {
+		"icon": {
+			"item": "mb:water_shard"
+		},
+		"title": {
+			"translate": "itemGroup.MagicBooks"
+		},
+		"description": {
+			"translate": "advancements.mb:root.desc"
+		},
+		"background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+		"show_toast": true,
+		"announce_to_chat": true
+	},
+	"criteria": {
+		"airshard_in_inventory": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "mb:air_shard",
+						"count": { "min": 1 }
+					}
+				]
+			}
+		},
+		"earthshard_in_inventory": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "mb:earth_shard",
+						"count": { "min": 1 }
+					}
+				]
+			}
+		},
+		"fireshard_in_inventory": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "mb:fire_shard",
+						"count": { "min": 1 }
+					}
+				]
+			}
+		},
+		"watershard_in_inventory": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "mb:water_shard",
+						"count": { "min": 1 }
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		["airshard_in_inventory", "earthshard_in_inventory", "fireshard_in_inventory", "watershard_in_inventory"]
+	]
 }
+	

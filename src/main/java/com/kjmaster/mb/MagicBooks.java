@@ -51,6 +51,7 @@ public class MagicBooks {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         LOGGER.info("Starting Initialization");
+        proxy.registerModelBakeryVariants();
         proxy.init(event);
         ModCrafting.register();
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());

@@ -2,10 +2,12 @@ package com.kjmaster.mb.init;
 
 import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.creative.ModCreativeTab;
+import com.kjmaster.mb.handlers.EnumHandler;
 import com.kjmaster.mb.items.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +31,9 @@ public class ModItems {
     public static final Item EarthShard = new ItemEarthShard("earth_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item FireShard = new ItemEarthShard("fire_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item WaterShard = new ItemEarthShard("water_shard", ModCreativeTab.tabMagicBooks, 64);
+    public static final Item MagicBook = new ItemMagicBook("magicbook", ModCreativeTab.tabMagicBooks, 1);
+
+
 
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
@@ -45,6 +50,7 @@ public class ModItems {
                     EarthShard,
                     FireShard,
                     WaterShard,
+                    MagicBook,
 
             };
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -68,8 +74,15 @@ public class ModItems {
                 WaterShard,
 
         };
+        for(int i = 0; i < EnumHandler.MagicBookTypes.values().length; i++) {
+            registerRender(MagicBook, i, "magicbook_" + EnumHandler.MagicBookTypes.values()[i].getName() );
+
+        }
         for(final Item item : items) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Ref.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
         }
+    }
+    public static void registerRender(Item item, int meta, String fileName) {
+        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(new ResourceLocation(Ref.MODID, fileName), "inventory"));
     }
 }

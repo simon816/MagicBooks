@@ -12,7 +12,6 @@ public class ConfigHandler {
 
     //Earth Spells
     public static boolean isBonemealEnabled;
-    public static boolean isWallingRuneEnabled;
     public static boolean isClearWallEnabled;
     //Air Spells
     public static boolean isInvisibilityEnabled;
@@ -32,8 +31,7 @@ public class ConfigHandler {
         String category;
         category = "Earth Spells";
         config.addCustomCategoryComment(category, "Earth Spells Settings");
-        isBonemealEnabled = config.getBoolean("isBonemealEnabled", category, true, "Sets whether the bonemeal spell is enabled or not");
-        isWallingRuneEnabled = config.getBoolean("isWallingRuneEnabled", category, true, "Sets whether the spawn walling rune spell is enabled or not");
+        isBonemealEnabled = config.getBoolean("isBonemealEnabled", category, true, "Sets whether the Bonemeal spell is enabled or not");
         isClearWallEnabled = config.getBoolean("isClearWallEnabled", category, true, "Sets whether the clear wall spell is enabled or not");
         category = "Air Spells";
         config.addCustomCategoryComment(category, "Air Spells Settings");

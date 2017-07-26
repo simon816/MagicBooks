@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "mb:magicbook",
+	"data": 0
+  },
+  "pattern": [
+    " a ",
+    "wbe",
+    " f "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "mb:air_shard"
+    },
+	"b": {
+      "item": "minecraft:book"
+    },
+	"e": {
+      "item": "mb:earth_shard"
+    },
+	"f": {
+      "item": "mb:fire_shard"
+    },
+	"w": {
+      "item": "mb:water_shard"
+    }
+  }
+}

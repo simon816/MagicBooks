@@ -1,19 +1,17 @@
 package com.kjmaster.mb.client;
 
 import com.kjmaster.mb.Ref;
-import com.kjmaster.mb.guis.GuiEarthSpells;
+import com.kjmaster.mb.guis.spellunlock.GuiEarthSpells;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.network.mbPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opencl.CL;
 
 import javax.annotation.Nonnull;
 
@@ -24,22 +22,10 @@ import javax.annotation.Nonnull;
 public class KeyHandler {
     private static final String SECTION_NAME = Ref.NAME;
     private static final KeyBinding SPELLGUI_KEY = new KeyBinding("SpellGui", Keyboard.KEY_M, SECTION_NAME);
-    private static final KeyBinding BONEMEAL_KEY = new KeyBinding("Bonemeal Spell", Keyboard.KEY_B, SECTION_NAME);
-    private static final KeyBinding INVIS_KEY = new KeyBinding("Invisiblity Spell", Keyboard.KEY_I, SECTION_NAME);
-    private static final KeyBinding LIGHTNING_KEY = new KeyBinding("Lightning Spell", Keyboard.KEY_L, SECTION_NAME);
-    private static final KeyBinding FIREBLAST_KEY = new KeyBinding("Fire Blast Spell", Keyboard.KEY_F, SECTION_NAME);
-    private static final KeyBinding WATERWOLF_KEY = new KeyBinding("Water Wolf Spell", Keyboard.KEY_NUMPAD1, SECTION_NAME);
-    private static final KeyBinding WALLINGRUNE_KEY = new KeyBinding("Spawn Walling Rune Spell", Keyboard.KEY_NUMPAD4, SECTION_NAME);
-    private static final KeyBinding CLEARWALL_KEY = new KeyBinding("Clear Wall Spell", Keyboard.KEY_NUMPAD5, SECTION_NAME);
+    private static final KeyBinding CHANGEBOOK_KEY = new KeyBinding("Change Spell", Keyboard.KEY_U, SECTION_NAME);
     static {
         ClientRegistry.registerKeyBinding(SPELLGUI_KEY);
-        ClientRegistry.registerKeyBinding(BONEMEAL_KEY);
-        ClientRegistry.registerKeyBinding(INVIS_KEY);
-        ClientRegistry.registerKeyBinding(LIGHTNING_KEY);
-        ClientRegistry.registerKeyBinding(FIREBLAST_KEY);
-        ClientRegistry.registerKeyBinding(WATERWOLF_KEY);
-        ClientRegistry.registerKeyBinding(WALLINGRUNE_KEY);
-        ClientRegistry.registerKeyBinding(CLEARWALL_KEY);
+        ClientRegistry.registerKeyBinding(CHANGEBOOK_KEY);
     }
 
     @SubscribeEvent(receiveCanceled = false)
@@ -48,27 +34,8 @@ public class KeyHandler {
             final GuiEarthSpells gui = new GuiEarthSpells();
             Minecraft.getMinecraft().displayGuiScreen(gui);
         }
-
-        if(BONEMEAL_KEY.isPressed()){
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(2));
-        }
-        if(INVIS_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(4));
-        }
-        if(LIGHTNING_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(6));
-        }
-        if(FIREBLAST_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(8));
-        }
-        if(WATERWOLF_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(10));
-        }
-        if(WALLINGRUNE_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(12));
-        }
-        if(CLEARWALL_KEY.isPressed()) {
-            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(14));
+        if(CHANGEBOOK_KEY.isPressed()) {
+            mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(19));
         }
     }
 }
