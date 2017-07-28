@@ -82,6 +82,14 @@ public class ModBlocks {
             10.0F,
             "pickaxe",
             2);
+    public static final Block woodCutRuneBlock = new BlockWoodCutRune(
+            "woodcutrune_block",
+            Material.CLOTH,
+            ModCreativeTab.tabMagicBooks,
+            1F,
+            1F,
+            "shears",
+            1);
 
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
@@ -93,6 +101,7 @@ public class ModBlocks {
             final Block[] blocks = {
                     wallingRuneBlock,
                     drowningRuneBlock,
+                    woodCutRuneBlock,
                     wallingBlock,
                     airShardOre,
                     earthShardOre,
@@ -110,12 +119,12 @@ public class ModBlocks {
             final ItemBlock[] items = {
                     new ItemBlock(wallingRuneBlock),
                     new ItemBlock(drowningRuneBlock),
+                    new ItemBlock(woodCutRuneBlock),
                     new ItemBlock(wallingBlock),
                     new ItemBlock(airShardOre),
                     new ItemBlock(earthShardOre),
                     new ItemBlock(fireShardOre),
                     new ItemBlock(waterShardOre),
-
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -133,6 +142,7 @@ public class ModBlocks {
         final Block[] blocks = {
                 wallingRuneBlock,
                 drowningRuneBlock,
+                woodCutRuneBlock,
                 wallingBlock,
                 airShardOre,
                 earthShardOre,
@@ -145,6 +155,7 @@ public class ModBlocks {
         final ItemBlock[] items = {
                 new ItemBlock(wallingRuneBlock),
                 new ItemBlock(drowningRuneBlock),
+                new ItemBlock(woodCutRuneBlock),
                 new ItemBlock(wallingBlock),
                 new ItemBlock(airShardOre),
                 new ItemBlock(earthShardOre),

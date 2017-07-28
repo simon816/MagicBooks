@@ -1,6 +1,5 @@
 package com.kjmaster.mb.spellmanager.earth.clearwall;
 
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.ISpawnWallingRuneManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagFloat;

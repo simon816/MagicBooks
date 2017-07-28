@@ -60,6 +60,7 @@ import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerStorage;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerStorage;
+import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
 import com.kjmaster.mb.worldgen.OreGen;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -108,6 +109,10 @@ public class CommonProxy {
 
     public void registerModelBakeryVariants() {
 
+    }
+
+    public void registerTileEntities() {
+        GameRegistry.registerTileEntity(TileEntityWoodCutRune.class, Ref.MODID + ":woodcutrune_block");
     }
 
 }

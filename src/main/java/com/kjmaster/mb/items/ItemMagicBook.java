@@ -1,5 +1,6 @@
 package com.kjmaster.mb.items;
 
+import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellProvider;
 import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
@@ -69,7 +70,9 @@ public class ItemMagicBook extends Item {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         int meta = player.getHeldItem(handIn).getItemDamage();
         if(meta == 0) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiMagicBook1());
+            if(player.world.isRemote) {
+                player.openGui(MagicBooks.instance, 4, worldIn, (int)player.posX, (int)player.posY, (int)player.posZ );
+            }
         } else {
             if (!(player.world.isRemote)) {
                 IChosenSpell ChosenSpell = player.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);

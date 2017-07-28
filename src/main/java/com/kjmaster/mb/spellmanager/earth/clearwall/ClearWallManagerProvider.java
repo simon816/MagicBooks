@@ -1,6 +1,5 @@
 package com.kjmaster.mb.spellmanager.earth.clearwall;
 
-import com.kjmaster.mb.spellmanager.earth.spawnwallingrune.ISpawnWallingRuneManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
