@@ -11,6 +11,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.io.IOException;
 
 /**
+ * CarbonHUN: he did nothing at all in this mod
  * Created by pbill_000 on 25/07/2017.
  */
 public class GuiMagicBook2 extends GuiScreen {
