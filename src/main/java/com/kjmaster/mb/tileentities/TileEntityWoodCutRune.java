@@ -3,15 +3,17 @@ package com.kjmaster.mb.tileentities;
 import com.google.common.collect.Lists;
 import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.Ref;
-import com.kjmaster.mb.blocks.BlockWoodCutRune;
-import com.kjmaster.mb.containers.ContainerWoodCutRune;
 import com.kjmaster.mb.events.TinkerToolEvent;
-import com.kjmaster.mb.util.ToolHelper;
+import com.kjmaster.mb.mana.ManaStorage;
+import com.kjmaster.mb.network.mbPacketHandler;
+import com.kjmaster.mb.util.InventoryUtils;
+import com.mojang.authlib.GameProfile;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -30,24 +32,25 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-
-import static com.kjmaster.mb.blocks.BlockWoodCutRune.*;
 
 /**
  * Created by pbill_000 on 27/07/2017.
  */
 public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICapabilityProvider {
-
+    public static int MANA_USE = 400;
     private ItemStackHandler handler;
-    private int cooldown;
+    public static int cooldown;
+    private static int blocksbroken = 0;
+    public final ManaStorage storage = new ManaStorage(10000, 10000, 10000);
 
     public TileEntityWoodCutRune() {
         this.cooldown = 0;
@@ -58,6 +61,7 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
     public void readFromNBT(NBTTagCompound compound) {
         this.cooldown = compound.getInteger("Cooldown");
         handler.deserializeNBT(compound.getCompoundTag("ItemStackHandler"));
+        this.storage.readFromNBT(compound);
         super.readFromNBT(compound);
     }
 
@@ -65,55 +69,78 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("Cooldown", this.cooldown);
         compound.setTag("ItemStackHandler", handler.serializeNBT() );
+        this.storage.writeToNBT(compound);
         return super.writeToNBT(compound);
     }
 
     @Override
     public void update() {
-        if(this.world != null) {
-                TileEntityWoodCutRune te = (TileEntityWoodCutRune) world.getTileEntity(pos);
-                IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                ItemStack itemStack = handler.getStackInSlot(0);
-                Item item = itemStack.getItem();
-                 if(item instanceof ItemAxe && !this.world.isRemote) {
-                     this.cooldown++;
-                     this.cooldown %= 500;
-                     MagicBooks.LOGGER.info(Ref.MODID + ":Rune Of Lumber Cooldown: " + this.cooldown);
-                     if(cooldown == 0) {
-                         BlockPos BlockPosNorth = new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1);
-                         BlockPos BlockPosSouth = new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1);
-                         BlockPos BlockPosEast = new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ());
-                         BlockPos BlockPosWest = new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ());
-                         EntityPlayer player = this.world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100000D, false);
-                         Block BlockNorth = world.getBlockState(BlockPosNorth).getBlock();
-                         Block BlockSouth = world.getBlockState(BlockPosSouth).getBlock();
-                         Block BlockEast = world.getBlockState(BlockPosEast).getBlock();
-                         Block BlockWest = world.getBlockState(BlockPosWest).getBlock();
-                         if(BlockNorth instanceof BlockLog) {
-                             if(detectTree(world, BlockPosNorth)) {
-                                 fellTree(BlockPosNorth, player);
-                             }
-                         }
-                         if(BlockSouth instanceof BlockLog) {
-                             if(detectTree(world, BlockPosSouth)) {
-                                 fellTree(BlockPosSouth, player);
-                             }
-                         }
-                         if(BlockEast instanceof BlockLog) {
-                             if(detectTree(world, BlockPosEast)) {
-                                 fellTree(BlockPosEast, player);
-                             }
-                         }
-                         if(BlockWest instanceof BlockLog) {
-                             if(detectTree(world, BlockPosWest)) {
-                                 fellTree(BlockPosWest, player);
-                             }
-                         }
-                     }
-                 }
+        if (this.world != null) {
+            EntityPlayer player = new EntityPlayer(world, new GameProfile(null, "RuneOfLumber")) {
+                @Override
+                public boolean isSpectator() {
+                    return true;
+                }
+
+                @Override
+                public boolean isCreative() {
+                    return false;
+                }
+            };
+            TileEntityWoodCutRune te = (TileEntityWoodCutRune) world.getTileEntity(pos);
+            IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+            ItemStack itemStack = handler.getStackInSlot(0);
+            Item item = itemStack.getItem();
+            if (item.getDamage(itemStack) >= item.getMaxDamage(itemStack) && item instanceof ItemAxe) {
+                itemStack.shrink(1);
+            }
+            if (item instanceof ItemAxe && !this.world.isRemote) {
+                te.cooldown++;
+                te.cooldown %= 150;
+                MagicBooks.LOGGER.info(Ref.MODID + ":Rune Of Lumber Cooldown: " + te.cooldown);
+                if (te.cooldown == 0) {
+                    coolDownDone(pos, world, te, player, handler);
+                }
+            }
+            te.setField(0, this.storage.getManaStored());
         }
     }
-    public static boolean fellTree(BlockPos start, EntityPlayer player) {
+
+    public static void coolDownDone(BlockPos pos, World world, TileEntityWoodCutRune te, EntityPlayer player, IItemHandler handler) {
+        BlockPos BlockPosNorth = new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1);
+        BlockPos BlockPosSouth = new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1);
+        BlockPos BlockPosEast = new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ());
+        BlockPos BlockPosWest = new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ());
+        Block BlockNorth = world.getBlockState(BlockPosNorth).getBlock();
+        Block BlockSouth = world.getBlockState(BlockPosSouth).getBlock();
+        Block BlockEast = world.getBlockState(BlockPosEast).getBlock();
+        Block BlockWest = world.getBlockState(BlockPosWest).getBlock();
+        if(BlockNorth instanceof BlockLog && te.storage.getManaStored() >= MANA_USE) {
+            if(detectTree(world, BlockPosNorth)) {
+                fellTree(BlockPosNorth, player, handler, pos, te);
+            }
+        }
+        if(BlockSouth instanceof BlockLog && te.storage.getManaStored() >= MANA_USE) {
+            if(detectTree(world, BlockPosSouth)) {
+                fellTree(BlockPosSouth, player, handler, pos, te);
+            }
+        }
+        if(BlockEast instanceof BlockLog  && te.storage.getManaStored() >= MANA_USE) {
+            if(detectTree(world, BlockPosEast)) {
+                fellTree(BlockPosEast, player, handler, pos, te);
+            }
+        }
+        if(BlockWest instanceof BlockLog  && te.storage.getManaStored() >= MANA_USE) {
+            if(detectTree(world, BlockPosWest)) {
+                fellTree(BlockPosWest, player, handler, pos, te);
+            }
+        }
+        int mana = te.storage.getManaStored();
+        MagicBooks.LOGGER.info("Rune of Lumber mana: " + mana);
+    }
+
+
+    public static boolean fellTree(BlockPos start, EntityPlayer player, IItemHandler handler1, BlockPos runePos, TileEntityWoodCutRune te) {
         if (player.getEntityWorld().isRemote) {
             return true;
         }
@@ -123,7 +150,7 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
             speed = event.distance + 1;
         }
 
-        MinecraftForge.EVENT_BUS.register(new TreeChopTask(start, player, speed));
+        MinecraftForge.EVENT_BUS.register(new TreeChopTask(start, player, speed, handler1, runePos, te));
         return true;
     }
 
@@ -153,32 +180,11 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
             return false;
         }
 
-        // check if there were enough leaves around the last position
-        // pos now contains the block above the topmost log
-        // we want at least 5 leaves in the surrounding 26 blocks
-        int d = 3;
-        int o = -1; // -(d-1)/2
-        int leaves = 0;
-        for (int x = 0; x < d; x++) {
-            for (int y = 0; y < d; y++) {
-                for (int z = 0; z < d; z++) {
-                    BlockPos leaf = pos.add(o + x, o + y, o + z);
-                    IBlockState state = world.getBlockState(leaf);
-                    if (state.getBlock().isLeaves(state, world, leaf)) {
-                        if (++leaves >= 5) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        // not enough leaves. sorreh
-        return false;
+        return true;
     }
 
     private static boolean isLog(World world, BlockPos pos) {
-        return world.getBlockState(pos).getBlock().isWood(world, pos);
+        return world.getBlockState(pos).getBlock().isWood(world, pos) || world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos);
     }
 
     public static class TreeChopTask {
@@ -186,15 +192,19 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
         public final World world;
         public final EntityPlayer player;
         public final int blocksPerTick;
-
+        public IItemHandler handler;
+        public BlockPos runePos;
         public Queue<BlockPos> blocks = Lists.newLinkedList();
         public Set<BlockPos> visited = new THashSet<>();
+        public TileEntityWoodCutRune te;
 
-        public TreeChopTask(BlockPos start, EntityPlayer player, int blocksPerTick) {
+        public TreeChopTask(BlockPos start, EntityPlayer player, int blocksPerTick, IItemHandler handler, BlockPos runePos, TileEntityWoodCutRune te) {
             this.world = player.getEntityWorld();
             this.player = player;
             this.blocksPerTick = blocksPerTick;
-
+            this.handler = handler;
+            this.runePos = runePos;
+            this.te = te;
             this.blocks.add(start);
         }
 
@@ -250,14 +260,72 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
                 }
 
                 // break it, wooo!
-                ToolHelper.breakExtraBlock(world, player, pos, pos);
+                BlockPos blockPosUp = new BlockPos(runePos.getX(), runePos.getY() + 1, runePos.getZ());
+                IItemHandler handlerUp = InventoryUtils.tryGetHandler(world, blockPosUp, null);
+                BlockPos blockPosDown = new BlockPos(runePos.getX(), runePos.getY() - 1, runePos.getZ());
+                IItemHandler handlerDown = InventoryUtils.tryGetHandler(world, blockPosDown, null);
+                BlockPos blockPosNorth = new BlockPos(runePos.getX(), runePos.getY() + 1, runePos.getZ() - 1);
+                IItemHandler handlerNorth = InventoryUtils.tryGetHandler(world, blockPosNorth, null);
+                BlockPos blockPosSouth = new BlockPos(runePos.getX(), runePos.getY() + 1, runePos.getZ() + 1);
+                IItemHandler handlerSouth = InventoryUtils.tryGetHandler(world, blockPosSouth, null);
+                BlockPos blockPosEast = new BlockPos(runePos.getX() + 1, runePos.getY() + 1, runePos.getZ());
+                IItemHandler handlerEast = InventoryUtils.tryGetHandler(world, blockPosEast, null);
+                BlockPos blockPosWest = new BlockPos(runePos.getX() - 1, runePos.getY() + 1, runePos.getZ());
+                IItemHandler handlerWest = InventoryUtils.tryGetHandler(world, blockPosWest, null);
+                List <ItemStack> drops = world.getBlockState(pos).getBlock().getDrops(world, pos, world.getBlockState(pos), 0);
+                for(ItemStack drop: drops) {
+                    if (handlerUp != null) {
+                        if (InventoryUtils.canInsertStack(handlerUp, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerUp, drop, false);
+                        }
+                    }
+                    else if (handlerDown != null) {
+                        if (InventoryUtils.canInsertStack(handlerDown, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerDown, drop, false);
+                        }
+                    }
+                    else if (handlerNorth != null) {
+                        if (InventoryUtils.canInsertStack(handlerNorth, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerNorth, drop, false);
+                        }
+                    }
+                    else if (handlerSouth != null) {
+                        if (InventoryUtils.canInsertStack(handlerSouth, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerSouth, drop, false);
+                        }
+                    }
+                    else if (handlerEast != null) {
+                        if (InventoryUtils.canInsertStack(handlerEast, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerEast, drop, false);
+                        }
+                    }
+                    else if (handlerWest != null) {
+                        if (InventoryUtils.canInsertStack(handlerWest, drop)) {
+                            ItemHandlerHelper.insertItemStacked(handlerWest, drop, false);
+                        }
+                    }
+                    else {
+                        InventoryHelper.spawnItemStack(world, blockPosUp.getX(), blockPosUp.getY(), blockPosUp.getZ(), drop);
+                    }
+                }
+                world.destroyBlock(pos, false);
+                blocksbroken = blocksbroken + 1;
                 left--;
             }
         }
 
         private void finish() {
-            // goodbye cruel world
             MinecraftForge.EVENT_BUS.unregister(this);
+            int damage = handler.getStackInSlot(0).getItemDamage();
+            handler.getStackInSlot(0).setItemDamage(damage + blocksbroken);
+            if(!world.isRemote) {
+                te.storage.extractMana(MANA_USE, false);
+                int mana = te.storage.getManaStored();
+                MagicBooks.LOGGER.info("Rune of Lumber mana 2: " + mana);
+                MagicBooks.LOGGER.info(Ref.MODID + ": Blocks Broken: " + blocksbroken);
+            }
+            blocksbroken = 0;
+            // goodbye cruel world
         }
     }
 
@@ -296,7 +364,7 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return (T) handler;
         return super.getCapability(capability, facing);
     }
@@ -307,4 +375,41 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
             return true;
         return super.hasCapability(capability, facing);
     }
+
+    public void recieveMana(int mana) {
+        this.storage.recieveMana(mana, false);
+    }
+
+    public void extractMana(int mana) {
+        this.storage.extractMana(mana, false);
+    }
+
+    public boolean getCanReceive() {
+        return this.storage.canReceive();
+    }
+
+    public int getManaStored() {
+        return this.storage.getManaStored();
+    }
+
+    public int getField(int id) {
+        switch (id)
+        {
+            case 0:
+                return this.storage.getManaStored();
+            default:
+                return 0;
+        }
+    }
+
+    public void setField(int id, int value) {
+        switch (id)
+        {
+            case 0:
+                this.storage.setMana(value);
+        }
+    }
+
+    public int getFieldCount() { return 1; }
+
 }

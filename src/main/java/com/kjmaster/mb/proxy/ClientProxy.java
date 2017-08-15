@@ -4,12 +4,14 @@ package com.kjmaster.mb.proxy;
  * Created by pbill_000 on 05/06/2017.
  */
 import com.kjmaster.mb.Ref;
+import com.kjmaster.mb.blocks.BlockEarthCrystal;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.init.ModEntities;
 import com.kjmaster.mb.init.ModItems;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,7 +29,9 @@ public class ClientProxy extends CommonProxy{
     public void preInit(FMLPreInitializationEvent event)
     {
         ModEntities.initModels();
+        OBJLoader.INSTANCE.addDomain(Ref.MODID);
         super.preInit(event);
+        BlockEarthCrystal.initModel();
     }
 
     @Override

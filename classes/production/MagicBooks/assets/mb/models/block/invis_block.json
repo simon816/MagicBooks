@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+		"particle": "mb:blocks/earth_crystal",
+        "all": "mb:blocks/invis_block"
+    }
+}

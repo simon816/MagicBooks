@@ -32,6 +32,7 @@ public class ModItems {
     public static final Item FireShard = new ItemEarthShard("fire_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item WaterShard = new ItemEarthShard("water_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item MagicBook = new ItemMagicBook("magicbook", ModCreativeTab.tabMagicBooks, 1);
+    public static final Item CrystalLinker = new ItemCrystalLinker("crystal_linker", ModCreativeTab.tabMagicBooks, 1);
 
 
 
@@ -51,6 +52,7 @@ public class ModItems {
                     FireShard,
                     WaterShard,
                     MagicBook,
+                    CrystalLinker,
 
             };
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -72,6 +74,7 @@ public class ModItems {
                 EarthShard,
                 FireShard,
                 WaterShard,
+                CrystalLinker,
 
         };
         for(int i = 0; i < EnumHandler.MagicBookTypes.values().length; i++) {

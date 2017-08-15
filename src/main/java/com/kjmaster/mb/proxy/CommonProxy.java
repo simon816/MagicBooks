@@ -29,6 +29,7 @@ import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8;
 import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Storage;
 import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.handlers.PacketsHandler;
+import com.kjmaster.mb.mana.CapabilityMana;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPoints;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsStorage;
@@ -60,7 +61,15 @@ import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerStorage;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerStorage;
-import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
+import com.kjmaster.mb.tileentities.*;
+import com.kjmaster.mb.tileentities.crystals.TileEntityAirCrystal;
+import com.kjmaster.mb.tileentities.crystals.TileEntityEarthCrystal;
+import com.kjmaster.mb.tileentities.crystals.TileEntityFireCrystal;
+import com.kjmaster.mb.tileentities.crystals.TileEntityWaterCrystal;
+import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterAirCrystal;
+import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterEarthCrystal;
+import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterFireCrystal;
+import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterWaterCrystal;
 import com.kjmaster.mb.worldgen.OreGen;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -103,7 +112,9 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(IChosenSpell6.class, new ChosenSpell6Storage(), ChosenSpell6.class);
         CapabilityManager.INSTANCE.register(IChosenSpell7.class, new ChosenSpell7Storage(), ChosenSpell7.class);
         CapabilityManager.INSTANCE.register(IChosenSpell8.class, new ChosenSpell8Storage(), ChosenSpell8.class);
+        CapabilityMana.register();
 
+        //Server packets
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
 
@@ -112,7 +123,17 @@ public class CommonProxy {
     }
 
     public void registerTileEntities() {
+        //Runes
         GameRegistry.registerTileEntity(TileEntityWoodCutRune.class, Ref.MODID + ":woodcutrune_block");
+        //Crystals
+        GameRegistry.registerTileEntity(TileEntityEarthCrystal.class, Ref.MODID + ":earth_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityAirCrystal.class, Ref.MODID + ":air_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityFireCrystal.class, Ref.MODID + ":fire_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityWaterCrystal.class, Ref.MODID + ":water_crystal_block");
+        //Greater Crystals
+        GameRegistry.registerTileEntity(TileEntityGreaterAirCrystal.class, Ref.MODID + ":greater_air_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityGreaterEarthCrystal.class, Ref.MODID + ":greater_earth_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityGreaterFireCrystal.class, Ref.MODID + ":greater_fire_crystal_block");
+        GameRegistry.registerTileEntity(TileEntityGreaterWaterCrystal.class, Ref.MODID + ":greater_water_crystal_block");
     }
-
 }

@@ -90,7 +90,70 @@ public class ModBlocks {
             1F,
             "shears",
             1);
-
+    public static final Block earthCrystalBlock = new BlockEarthCrystal(
+            "earth_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block airCrystalBlock = new BlockAirCrystal(
+            "air_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block fireCrystalBlock = new BlockFireCrystal(
+            "fire_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block waterCrystalBlock = new BlockWaterCrystal(
+            "water_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block greaterEarthCrystalBlock = new BlockGreaterEarthCrystal(
+            "greater_earth_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block greaterAirCrystalBlock = new BlockGreaterAirCrystal(
+            "greater_air_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block greaterFireCrystalBlock = new BlockGreaterFireCrystal(
+            "greater_fire_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
+    public static final Block greaterWaterCrystalBlock = new BlockGreaterWaterCrystal(
+            "greater_water_crystal",
+            Material.ROCK,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10.0F,
+            "pickaxe",
+            2);
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
         public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
@@ -107,6 +170,14 @@ public class ModBlocks {
                     earthShardOre,
                     fireShardOre,
                     waterShardOre,
+                    earthCrystalBlock,
+                    airCrystalBlock,
+                    fireCrystalBlock,
+                    waterCrystalBlock,
+                    greaterEarthCrystalBlock,
+                    greaterAirCrystalBlock,
+                    greaterFireCrystalBlock,
+                    greaterWaterCrystalBlock,
             };
             registry.registerAll(blocks);
             for (final Block block : blocks) {
@@ -125,6 +196,14 @@ public class ModBlocks {
                     new ItemBlock(earthShardOre),
                     new ItemBlock(fireShardOre),
                     new ItemBlock(waterShardOre),
+                    new ItemBlock(earthCrystalBlock),
+                    new ItemBlock(airCrystalBlock),
+                    new ItemBlock(fireCrystalBlock),
+                    new ItemBlock(waterCrystalBlock),
+                    new ItemBlock(greaterEarthCrystalBlock),
+                    new ItemBlock(greaterAirCrystalBlock),
+                    new ItemBlock(greaterFireCrystalBlock),
+                    new ItemBlock(greaterWaterCrystalBlock),
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();
@@ -148,6 +227,14 @@ public class ModBlocks {
                 earthShardOre,
                 fireShardOre,
                 waterShardOre,
+                earthCrystalBlock,
+                airCrystalBlock,
+                fireCrystalBlock,
+                waterCrystalBlock,
+                greaterEarthCrystalBlock,
+                greaterAirCrystalBlock,
+                greaterFireCrystalBlock,
+                greaterWaterCrystalBlock,
         };
         for(final Block block: blocks) {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Ref.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));;
@@ -161,6 +248,14 @@ public class ModBlocks {
                 new ItemBlock(earthShardOre),
                 new ItemBlock(fireShardOre),
                 new ItemBlock(waterShardOre),
+                new ItemBlock(earthCrystalBlock),
+                new ItemBlock(airCrystalBlock),
+                new ItemBlock(fireCrystalBlock),
+                new ItemBlock(waterCrystalBlock),
+                new ItemBlock(greaterEarthCrystalBlock),
+                new ItemBlock(greaterAirCrystalBlock),
+                new ItemBlock(greaterFireCrystalBlock),
+                new ItemBlock(greaterWaterCrystalBlock),
         };
         for(final ItemBlock item : items) {
             final Block block = item.getBlock();

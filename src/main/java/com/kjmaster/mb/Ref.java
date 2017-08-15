@@ -10,4 +10,5 @@ public class Ref {
     public static final String CLIENT_PROXY = "com.kjmaster.mb.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.kjmaster.mb.proxy.CommonProxy";
     public static final int PACKET_ID_EARTHPOINTS = 0;
+    public static final int PACKET_ID_MANA = 1;
 }

@@ -21,6 +21,7 @@ item.magicbook.spell8.name=Spell 8
 tile.wallingrune_block.name=Rune Of Walling
 tile.drowningrune_block.name=Rune Of Drowning
 tile.walling_block.name=Earth Wall Block
+tile.woodcutrune_block.name=Rune Of Lumber
 
 tile.air_shard_ore.name=Air Shard Ore
 tile.earth_shard_ore.name=Earth Shard Ore
@@ -46,4 +47,4 @@ advancements.mb:firebook.desc=You got a fire book!
 advancements.mb:waterbook=Water Book
 advancements.mb:waterbook.desc=You got a water book!
 
-container.woodcutrune_block = Rune Of Lumber
+container.woodcutrune_block=Rune Of Lumber

@@ -14,10 +14,13 @@ import com.kjmaster.mb.init.ModEntities;
 import com.kjmaster.mb.init.ModItems;
 import com.kjmaster.mb.network.ModGuiHandler;
 import com.kjmaster.mb.proxy.CommonProxy;
+import com.kjmaster.mb.worldgen.structures.StructureGenerator;
+import com.kjmaster.mb.worldgen.structures.WaterCircle;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,6 +65,7 @@ public class MagicBooks {
         proxy.registerTileEntities();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagicBooks.instance, new ModGuiHandler());
         ModEntities.generateSpawnEgg();
+        GameRegistry.registerWorldGenerator(new StructureGenerator(), 0);
     }
 
     @Mod.EventHandler

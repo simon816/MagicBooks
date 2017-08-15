@@ -1,44 +1,48 @@
 package com.kjmaster.mb.containers;
 
-
 import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
-import javax.annotation.Nullable;
 
 /**
- * Created by pbill_000 on 27/07/2017.
+ * Created by pbill_000 on 28/07/2017.
  */
 public class ContainerWoodCutRune extends Container {
-
+    private IInventory playerInv;
     private TileEntityWoodCutRune te;
     private IItemHandler handler;
-
+    private int mana;
     public ContainerWoodCutRune(IInventory playerInv, TileEntityWoodCutRune te) {
         this.te = te;
+        this.playerInv = playerInv;
         this.handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         this.addSlotToContainer(new SlotItemHandler(handler, 0, 80, 35));
-        int xPos = 8;
-        int yPos = 84;
 
+        // Player Inventory, Slot 9-35, Slot IDs 1-27
         for (int y = 0; y < 3; ++y) {
             for (int x = 0; x < 9; ++x) {
-                this.addSlotToContainer(new Slot(playerInv, x + y * 9 + 9, xPos + x * 18, yPos + y * 18));
+                this.addSlotToContainer(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
         }
+
+        // Player Inventory, Slot 0-8, Slot IDs 27-35
         for (int x = 0; x < 9; ++x) {
-            this.addSlotToContainer(new Slot(playerInv, x, xPos + x * 18, yPos + 58));
+            this.addSlotToContainer(new Slot(playerInv, x, 8 + x * 18, 142));
         }
-
-
     }
+
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return !playerIn.isSpectator();
@@ -73,20 +77,26 @@ public class ContainerWoodCutRune extends Container {
         return previous;
     }
 
-    @Nullable
-    @Override
-    public Slot getSlotFromInventory(IInventory inv, int slotIn) {
-        return super.getSlotFromInventory(inv, slotIn);
-    }
 
     @Override
-    public Slot getSlot(int slotId) {
-        return super.getSlot(slotId);
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        for(int i = 0; i < this.listeners.size(); i++) {
+            IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
+
+            if(this.mana != this.te.getField(0)) {
+                icontainerlistener.sendWindowProperty(this, 0, this.te.getField(0));
+            }
+        }
+        this.mana = this.te.storage.getManaStored();
     }
 
+
+    @SideOnly(Side.CLIENT)
     @Override
-    public boolean getCanCraft(EntityPlayer player) {
-        return false;
+    public void updateProgressBar(int id, int data) {
+        super.updateProgressBar(id, data);
+        this.te.setField(id, data);
     }
-
 }

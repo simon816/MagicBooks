@@ -20,15 +20,21 @@ import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Provider;
 import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.guis.magicbook.GuiMagicBook1;
 import com.kjmaster.mb.handlers.EnumHandler;
+import com.kjmaster.mb.init.ModItems;
 import com.kjmaster.mb.util.spells.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import static net.minecraft.init.Items.*;
 
 /**
  * Created by pbill_000 on 25/07/2017.
@@ -322,5 +328,17 @@ public class ItemMagicBook extends Item {
             }
         }
         return super.onItemRightClick(worldIn, player, handIn);
+    }
+    @SubscribeEvent
+    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
+        if(event.getEntityLiving() instanceof EntityPlayer) {
+            EntityPlayer player =  (EntityPlayer) event.getEntityLiving();
+            Item item = player.inventory.armorItemInSlot(2).getItem();
+            if((item.equals(CHAINMAIL_CHESTPLATE) || item.equals(CHAINMAIL_BOOTS) || item.equals(CHAINMAIL_HELMET) || item.equals(CHAINMAIL_LEGGINGS)) && !player.capabilities.isFlying) {
+                player.capabilities.allowFlying = true;
+            } else if (player.capabilities.allowFlying) {
+                player.capabilities.allowFlying = false;
+            }
+        }
     }
 }
