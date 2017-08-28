@@ -5,14 +5,12 @@ import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.events.TinkerToolEvent;
 import com.kjmaster.mb.mana.ManaStorage;
-import com.kjmaster.mb.network.mbPacketHandler;
 import com.kjmaster.mb.util.InventoryUtils;
 import com.mojang.authlib.GameProfile;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -97,7 +95,6 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
             if (item instanceof ItemAxe && !this.world.isRemote) {
                 te.cooldown++;
                 te.cooldown %= 150;
-                MagicBooks.LOGGER.info(Ref.MODID + ":Rune Of Lumber Cooldown: " + te.cooldown);
                 if (te.cooldown == 0) {
                     coolDownDone(pos, world, te, player, handler);
                 }
@@ -135,8 +132,6 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
                 fellTree(BlockPosWest, player, handler, pos, te);
             }
         }
-        int mana = te.storage.getManaStored();
-        MagicBooks.LOGGER.info("Rune of Lumber mana: " + mana);
     }
 
 
@@ -320,9 +315,6 @@ public class TileEntityWoodCutRune extends TileEntity implements ITickable, ICap
             handler.getStackInSlot(0).setItemDamage(damage + blocksbroken);
             if(!world.isRemote) {
                 te.storage.extractMana(MANA_USE, false);
-                int mana = te.storage.getManaStored();
-                MagicBooks.LOGGER.info("Rune of Lumber mana 2: " + mana);
-                MagicBooks.LOGGER.info(Ref.MODID + ": Blocks Broken: " + blocksbroken);
             }
             blocksbroken = 0;
             // goodbye cruel world

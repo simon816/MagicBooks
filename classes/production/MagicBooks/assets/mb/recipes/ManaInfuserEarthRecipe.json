@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "mb:mana_infuser"
+  },
+  "pattern": [
+    "   ",
+    " c ",
+    "sss"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "item": "mb:earth_crystal"
+    },
+	"s": {
+      "item": "mb:arcane_shard"
+    }
+  }
+}

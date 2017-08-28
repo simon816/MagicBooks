@@ -3,7 +3,6 @@ package com.kjmaster.mb.init;
 import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.client.render.RenderWaterWolf;
 import com.kjmaster.mb.entities.WaterWolf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;

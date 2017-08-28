@@ -1,6 +1,6 @@
 package com.kjmaster.mb.blocks;
 
-import com.kjmaster.mb.tileentities.crystals.TileEntityWaterCrystal;
+import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterWaterCrystal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ public class BlockGreaterWaterCrystal extends BlockBase implements ITileEntityPr
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return null;
+        return Item.getItemFromBlock(ModBlocks.greaterWaterCrystalBlock);
     }
 
     @Override

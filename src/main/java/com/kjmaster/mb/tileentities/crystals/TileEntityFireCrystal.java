@@ -3,6 +3,7 @@ package com.kjmaster.mb.tileentities.crystals;
 import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.mana.ManaStorage;
+import com.kjmaster.mb.tileentities.TileEntityManaInfuser;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -55,17 +56,19 @@ public class TileEntityFireCrystal extends TileEntity implements ITickable, ICap
                     BlockPos posToSendMana = getConnectedToPos();
                     TileEntity entity = world.getTileEntity(posToSendMana);
                     if(entity instanceof TileEntityFireCrystal) {
-                        MagicBooks.LOGGER.info("Test1");
                         TileEntityFireCrystal fireCrystal = (TileEntityFireCrystal) entity;
                         if(fireCrystal.getCanRecieve() && this.storage.canExtract() && !fireCrystal.storage.isFull() && this.storage.getManaStored() >= MANA_USE) {
-                            MagicBooks.LOGGER.info("Test2");
                             fireCrystal.receiveMana(MANA_USE);
+                            this.storage.extractMana(MANA_USE, false);
+                        }
+                    } else if (entity instanceof TileEntityManaInfuser) {
+                        TileEntityManaInfuser manaInfuser = (TileEntityManaInfuser) entity;
+                        if (manaInfuser.storage.canFireReceive() && this.storage.canExtract() && !manaInfuser.storage.isFireFull() && this.storage.getManaStored() >= MANA_USE) {
+                            manaInfuser.storage.receiveFireMana(MANA_USE, false);
                             this.storage.extractMana(MANA_USE, false);
                         }
                     }
                 }
-                int mana = this.storage.getManaStored();
-                MagicBooks.LOGGER.info("fire crystal mana: " + mana);
             }
         }
     }

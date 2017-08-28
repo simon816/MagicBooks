@@ -34,7 +34,7 @@ public class TileEntityGreaterAirCrystal extends TileEntity implements ITickable
             TileEntityGreaterAirCrystal te = (TileEntityGreaterAirCrystal) world.getTileEntity(pos);
             if(!this.world.isRemote) {
                 if(te.getConnections() > 0) {
-                    te.storage.recieveMana(10000, false);
+                    te.storage.recieveMana(500, false);
                     List<BlockPos> posToSendManaTo = te.getConnectedToPos();
                     for(int i = 0; i < posToSendManaTo.size(); i++) {
                         TileEntity entity = world.getTileEntity(posToSendManaTo.get(i));

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "mb:earth_crystal"
+  },
+  "pattern": [
+    " a ",
+    "ara",
+    " a "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "mb:earth_shard"
+    },
+	"r": {
+      "item": "minecraft:redstone_block"
+    }
+  }
+}

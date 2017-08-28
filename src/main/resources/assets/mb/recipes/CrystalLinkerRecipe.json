@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "mb:crystal_linker"
+  },
+  "pattern": [
+    "  a",
+    " s ",
+    "s  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+	"a": {
+      "item": "mb:arcane_shard"
+    }
+  }
+}

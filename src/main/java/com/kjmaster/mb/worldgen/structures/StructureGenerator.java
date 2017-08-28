@@ -2,10 +2,7 @@ package com.kjmaster.mb.worldgen.structures;
 
 import com.kjmaster.mb.MagicBooks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -13,8 +10,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.ArrayList;
@@ -55,10 +50,38 @@ public class StructureGenerator implements IWorldGenerator {
         int xy = x >> 4;
         int zy = z >> 4;
         int height = world.getChunkFromChunkCoords(xy, zy).getHeight(new BlockPos(x & 15, 0, z & 15));
-        int y = height-1;
-        if((random.nextInt(2000) + 1) <= 4) {
-            if(isInWaterBiome(world, x, y, z))
-                waterCircle.generate(world, random, new BlockPos(x, y, z));
+        int testy;
+        int y = 0;
+        for (int i = 0; i < 60; i++) {
+            testy = height - i;
+            if(world.getBlockState(new BlockPos(x,testy, z)).getBlock().equals(Blocks.AIR) || world.getBlockState(new BlockPos(x, testy, z)).getBlock().equals(Blocks.WATER)) {
+
+            } else {
+                y = testy;
+                break;
+            }
+        }
+        if(isInWaterBiome(world, x, y, z) && isOnBlock(world, x, y, z) && hasFloor(world, x, y, z)) {
+            if((random.nextInt(50) + 1) <= 1) {
+                boolean place = false;
+                int m = 0;
+                for(int j = 0; j < 5; j++) {
+                    for(int k = 0; k < 10; k++) {
+                        for(int i = 0; i < 10; i++) {
+                            if((world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.AIR))
+                                    || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.WATER))
+                                    || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.FLOWING_WATER)))  {
+                                m++;
+                            }
+                        }
+                    }
+                }
+                if(m > 499)
+                    place = true;
+                if(place) {
+                    waterCircle.generate(world, random, new BlockPos(x, y, z));
+                }
+            }
         }
     }
 
@@ -70,9 +93,7 @@ public class StructureGenerator implements IWorldGenerator {
         int height = world.getChunkFromChunkCoords(xy, zy).getHeight(new BlockPos(x & 15, 0, z & 15));
         int y = height-1;
         if(isOnBlock(world, x, y, z) && hasFloor(world, x, y, z) && isInFireBiome(world, x, y, z)) {
-            MagicBooks.LOGGER.info("Test 3");
-            if((random.nextInt(50) + 1) <= 4) {
-                MagicBooks.LOGGER.info("Test 4");
+            if((random.nextInt(50) + 1) <= 1) {
                 boolean place = false;
                 int m = 0;
                 for(int j = 0; j < 5; j++) {
@@ -81,13 +102,11 @@ public class StructureGenerator implements IWorldGenerator {
                             if((world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.AIR))
                                     || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.TALLGRASS))
                                     || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock() instanceof BlockFlower))  {
-                                MagicBooks.LOGGER.info("Test 5");
                                 m++;
                             }
                         }
                     }
                 }
-                MagicBooks.LOGGER.info("Blocks " + m);
                 if(m > 499)
                     place = true;
                 if(place) {
@@ -105,7 +124,7 @@ public class StructureGenerator implements IWorldGenerator {
         int height = world.getChunkFromChunkCoords(xy, zy).getHeight(new BlockPos(x & 15, 0, z & 15));
         int y = height-1;
         if(isOnBlock(world, x, y, z) && hasFloor(world, x, y, z) && isInEarthBiome(world, x, y, z)) {
-            if((random.nextInt(50) + 1) <= 4) {
+            if((random.nextInt(50) + 1) <= 1) {
                 boolean place = false;
                 int m = 0;
                 for(int j = 0; j < 5; j++) {
@@ -119,7 +138,6 @@ public class StructureGenerator implements IWorldGenerator {
                         }
                     }
                 }
-                MagicBooks.LOGGER.info("Blocks " + m);
                 if(m > 499)
                     place = true;
                 if(place) {
@@ -136,28 +154,23 @@ public class StructureGenerator implements IWorldGenerator {
         int xy = x >> 4;
         int zy = z >> 4;
         int height = world.getChunkFromChunkCoords(xy, zy).getHeight(new BlockPos(x & 15, 0, z & 15));
-        int y = height-1;
-        if(isOnBlock(world, x, y, z) && hasFloor(world, x, y, z) && isInAirBiome(world, x, y, z)) {
-            if((random.nextInt(50) + 1) <= 4) {
-                boolean place = false;
-                int m = 0;
-                for(int j = 0; j < 5; j++) {
-                    for(int k = 0; k < 10; k++) {
-                        for(int i = 0; i < 10; i++) {
-                            if((world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.AIR))
-                                    || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.TALLGRASS))
-                                    || (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock() instanceof BlockFlower))  {
-                                m++;
-                            }
+        int y = height + 50 + random.nextInt(50) + 31;
+        if((random.nextInt(600) + 1) <= 1) {
+            boolean place = false;
+            int m = 0;
+            for (int j = 0; j < 5; j++) {
+                for (int k = 0; k < 10; k++) {
+                    for (int i = 0; i < 10; i++) {
+                        if (world.getBlockState(new BlockPos(i + x, j + y + 1, k + z)).getBlock().equals(Blocks.AIR)) {
+                            m++;
                         }
                     }
                 }
-                MagicBooks.LOGGER.info("Blocks " + m);
-                if(m > 499)
-                    place = true;
-                if(place) {
-                    airCircle.generate(world, random, new BlockPos(x, y, z));
-                }
+            }
+            if (m > 499)
+                place = true;
+            if (place) {
+                airCircle.generate(world, random, new BlockPos(x, y, z));
             }
         }
     }
@@ -252,9 +265,6 @@ public class StructureGenerator implements IWorldGenerator {
                     m++;
             }
         }
-        MagicBooks.LOGGER.info("Floor Air Blocks: " + m);
         return m < 1;
     }
-
-
 }

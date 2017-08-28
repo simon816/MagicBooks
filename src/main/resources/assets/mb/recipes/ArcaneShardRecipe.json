@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "mb:arcane_shard"
+  },
+  "pattern": [
+    " a ",
+    "wde",
+    " f "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "a": {
+      "item": "mb:air_shard"
+    },
+	"d": {
+      "item": "minecraft:diamond"
+    },
+	"e": {
+      "item": "mb:earth_shard"
+    },
+	"f": {
+      "item": "mb:fire_shard"
+    },
+	"w": {
+      "item": "mb:water_shard"
+    }
+  }
+}

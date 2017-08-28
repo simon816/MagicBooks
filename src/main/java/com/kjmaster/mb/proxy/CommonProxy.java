@@ -71,6 +71,7 @@ import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterEarthCrysta
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterFireCrystal;
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterWaterCrystal;
 import com.kjmaster.mb.worldgen.OreGen;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import com.kjmaster.mb.Ref;
@@ -91,8 +92,6 @@ public class CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {}
     public void serverStarting(FMLServerStartingEvent event) {}
     public void serverStopping(FMLServerStoppingEvent event) {}
-    @SidedProxy(clientSide = Ref.CLIENT_PROXY, serverSide = Ref.COMMON_PROXY)
-    public static CommonProxy proxy;
     public static void register() {
         CapabilityManager.INSTANCE.register(IAirSkillPoints.class, new AirSkillPointsStorage(), AirSkillPoints.class );
         CapabilityManager.INSTANCE.register(IEarthSkillPoints.class, new EarthSkillPointsStorage(), EarthSkillPoints.class );
@@ -118,9 +117,7 @@ public class CommonProxy {
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
     }
 
-    public void registerModelBakeryVariants() {
-
-    }
+    public void registerModelBakeryVariants() {}
 
     public void registerTileEntities() {
         //Runes
@@ -135,5 +132,7 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityGreaterEarthCrystal.class, Ref.MODID + ":greater_earth_crystal_block");
         GameRegistry.registerTileEntity(TileEntityGreaterFireCrystal.class, Ref.MODID + ":greater_fire_crystal_block");
         GameRegistry.registerTileEntity(TileEntityGreaterWaterCrystal.class, Ref.MODID + ":greater_water_crystal_block");
+
+        GameRegistry.registerTileEntity(TileEntityManaInfuser.class, Ref.MODID + ":mana_infuser");
     }
 }

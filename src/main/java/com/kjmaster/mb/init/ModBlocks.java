@@ -7,7 +7,6 @@ import jline.internal.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -154,6 +153,14 @@ public class ModBlocks {
             10.0F,
             "pickaxe",
             2);
+    public static final Block manaInfuser = new BlockManaInfuser(
+            "mana_infuser",
+            Material.IRON,
+            ModCreativeTab.tabMagicBooks,
+            3.0F,
+            10F,
+            "pickaxe",
+            2);
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
         public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
@@ -162,6 +169,7 @@ public class ModBlocks {
         public static void registerBlocks(final RegistryEvent.Register<Block> event) {
             final IForgeRegistry<Block> registry = event.getRegistry();
             final Block[] blocks = {
+                    manaInfuser,
                     wallingRuneBlock,
                     drowningRuneBlock,
                     woodCutRuneBlock,
@@ -188,6 +196,7 @@ public class ModBlocks {
         @SubscribeEvent
         public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
             final ItemBlock[] items = {
+                    new ItemBlock(manaInfuser),
                     new ItemBlock(wallingRuneBlock),
                     new ItemBlock(drowningRuneBlock),
                     new ItemBlock(woodCutRuneBlock),
@@ -219,6 +228,7 @@ public class ModBlocks {
     @SideOnly(Side.CLIENT)
     public static void registerModels() {
         final Block[] blocks = {
+                manaInfuser,
                 wallingRuneBlock,
                 drowningRuneBlock,
                 woodCutRuneBlock,
@@ -240,6 +250,7 @@ public class ModBlocks {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Ref.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));;
         }
         final ItemBlock[] items = {
+                new ItemBlock(manaInfuser),
                 new ItemBlock(wallingRuneBlock),
                 new ItemBlock(drowningRuneBlock),
                 new ItemBlock(woodCutRuneBlock),

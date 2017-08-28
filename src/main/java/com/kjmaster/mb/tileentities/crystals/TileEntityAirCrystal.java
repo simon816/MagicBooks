@@ -3,6 +3,9 @@ package com.kjmaster.mb.tileentities.crystals;
 import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.mana.ManaStorage;
+import com.kjmaster.mb.proxy.ClientProxy;
+import com.kjmaster.mb.proxy.CommonProxy;
+import com.kjmaster.mb.tileentities.TileEntityManaInfuser;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -55,17 +58,19 @@ public class TileEntityAirCrystal extends TileEntity implements ITickable, ICapa
                     BlockPos posToSendMana = getConnectedToPos();
                     TileEntity entity = world.getTileEntity(posToSendMana);
                     if(entity instanceof TileEntityAirCrystal) {
-                        MagicBooks.LOGGER.info("Test1");
                         TileEntityAirCrystal airCrystal = (TileEntityAirCrystal) entity;
                         if(airCrystal.getCanRecieve() && this.storage.canExtract() && !airCrystal.storage.isFull() && this.storage.getManaStored() >= MANA_USE) {
-                            MagicBooks.LOGGER.info("Test2");
                             airCrystal.receiveMana(MANA_USE);
+                            this.storage.extractMana(MANA_USE, false);
+                        }
+                    } else if (entity instanceof TileEntityManaInfuser) {
+                        TileEntityManaInfuser manaInfuser = (TileEntityManaInfuser) entity;
+                        if (manaInfuser.storage.canAirReceive() && this.storage.canExtract() && !manaInfuser.storage.isAirFull() && this.storage.getManaStored() >= MANA_USE) {
+                            manaInfuser.storage.receiveAirMana(MANA_USE, false);
                             this.storage.extractMana(MANA_USE, false);
                         }
                     }
                 }
-                int mana = this.storage.getManaStored();
-                MagicBooks.LOGGER.info("air crystal mana: " + mana);
             }
         }
     }

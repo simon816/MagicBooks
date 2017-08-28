@@ -1,6 +1,5 @@
 package com.kjmaster.mb.blocks;
 
-import com.kjmaster.mb.init.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;

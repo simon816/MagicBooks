@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
@@ -18,6 +19,7 @@ import javax.annotation.Nonnull;
 /**
  * Created by pbill_000 on 07/06/2017.
  */
+@SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = Ref.MODID)
 public class KeyHandler {
     private static final String SECTION_NAME = Ref.NAME;
@@ -27,7 +29,7 @@ public class KeyHandler {
         ClientRegistry.registerKeyBinding(SPELLGUI_KEY);
         ClientRegistry.registerKeyBinding(CHANGEBOOK_KEY);
     }
-
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent(receiveCanceled = false)
     public static void onKeyboard(@Nonnull InputEvent.KeyInputEvent event) {
         if(SPELLGUI_KEY.isPressed() && Minecraft.getMinecraft().currentScreen == null) {

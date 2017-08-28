@@ -7,6 +7,7 @@ item.air_shard.name= Air Shard
 item.earth_shard.name= Earth Shard
 item.fire_shard.name= Fire Shard
 item.water_shard.name= Water Shard
+item.arcane_shard.name=Arcane Shard
 
 item.magicbook.nospell.name=Magic Book
 item.magicbook.spell1.name=Spell 1
@@ -18,6 +19,8 @@ item.magicbook.spell6.name=Spell 6
 item.magicbook.spell7.name=Spell 7
 item.magicbook.spell8.name=Spell 8
 
+item.crystal_linker.name=Crystal Linker
+
 tile.wallingrune_block.name=Rune Of Walling
 tile.drowningrune_block.name=Rune Of Drowning
 tile.walling_block.name=Earth Wall Block
@@ -27,6 +30,18 @@ tile.air_shard_ore.name=Air Shard Ore
 tile.earth_shard_ore.name=Earth Shard Ore
 tile.fire_shard_ore.name=Fire Shard Ore
 tile.water_shard_ore.name=Water Shard Ore
+
+tile.earth_crystal.name=Earth Crystal
+tile.air_crystal.name=Air Crystal
+tile.fire_crystal.name=Fire Crystal
+tile.water_crystal.name=Water Crystal
+
+tile.greater_earth_crystal.name=Greater Earth Crystal
+tile.greater_air_crystal.name=Greater Air Crystal
+tile.greater_fire_crystal.name=Greater Fire Crystal
+tile.greater_water_crystal.name=Greater Water Crystal
+
+tile.mana_infuser.name=Mana Infuser
 
 entity.mb_watergolem.name="Water Wolf"
 
@@ -48,3 +63,10 @@ advancements.mb:waterbook=Water Book
 advancements.mb:waterbook.desc=You got a water book!
 
 container.woodcutrune_block=Rune Of Lumber
+
+container.air_crystal=Air Crystal
+container.earth_crystal=Earth Crystal
+container.fire_crystal=Fire Crystal
+container.water_crystal=Water Crystal
+
+container.mana_infuser=Mana Infuser

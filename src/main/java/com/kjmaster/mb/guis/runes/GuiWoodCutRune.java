@@ -1,6 +1,5 @@
 package com.kjmaster.mb.guis.runes;
 
-import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.containers.ContainerWoodCutRune;
 import com.kjmaster.mb.guis.ProgressBar;

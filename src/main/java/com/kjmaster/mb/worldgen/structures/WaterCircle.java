@@ -1,23 +1,12 @@
 package com.kjmaster.mb.worldgen.structures;
 
 import com.kjmaster.mb.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGlass;
-import net.minecraft.block.BlockPrismarine;
-import net.minecraft.block.BlockSeaLantern;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeOcean;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**

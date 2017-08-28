@@ -1,7 +1,6 @@
 package com.kjmaster.mb.tileentities.greatercrystals;
 
 import com.kjmaster.mb.mana.ManaStorage;
-import com.kjmaster.mb.tileentities.crystals.TileEntityAirCrystal;
 import com.kjmaster.mb.tileentities.crystals.TileEntityEarthCrystal;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -35,7 +34,7 @@ public class TileEntityGreaterEarthCrystal extends TileEntity implements ITickab
             TileEntityGreaterEarthCrystal te = (TileEntityGreaterEarthCrystal) world.getTileEntity(pos);
             if(!this.world.isRemote) {
                 if(te.getConnections() > 0) {
-                    te.storage.recieveMana(10000, false);
+                    te.storage.recieveMana(500, false);
                     List<BlockPos> posToSendManaTo = te.getConnectedToPos();
                     for(int i = 0; i < posToSendManaTo.size(); i++) {
                         TileEntity entity = world.getTileEntity(posToSendManaTo.get(i));

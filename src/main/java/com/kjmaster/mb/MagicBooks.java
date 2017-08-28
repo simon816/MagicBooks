@@ -5,19 +5,18 @@ package com.kjmaster.mb;
  */
 import com.kjmaster.mb.client.ConfigHandler;
 import com.kjmaster.mb.events.CloneEvent;
+import com.kjmaster.mb.events.EntityJoinEvent;
 import com.kjmaster.mb.events.Tick;
 import com.kjmaster.mb.handlers.CapabilityHandler;
 import com.kjmaster.mb.handlers.LootHandler;
-import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.init.ModCrafting;
 import com.kjmaster.mb.init.ModEntities;
-import com.kjmaster.mb.init.ModItems;
 import com.kjmaster.mb.network.ModGuiHandler;
 import com.kjmaster.mb.proxy.CommonProxy;
 import com.kjmaster.mb.worldgen.structures.StructureGenerator;
-import com.kjmaster.mb.worldgen.structures.WaterCircle;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -26,11 +25,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-import static com.kjmaster.mb.proxy.CommonProxy.proxy;
 
-@Mod(modid = Ref.MODID, name=Ref.NAME, version=Ref.VERSION)
+@Mod(modid = Ref.MODID, name=Ref.NAME, version=Ref.VERSION, dependencies = "before:guideapi")
 public class MagicBooks {
-
+    @SidedProxy(clientSide = Ref.CLIENT_PROXY, serverSide = Ref.COMMON_PROXY)
+    public static CommonProxy proxy;
     @Mod.Instance
     public static MagicBooks instance;
 
@@ -38,7 +37,6 @@ public class MagicBooks {
     public static File getConfigDir() {
         return configDir;
     }
-
 
 
     @Mod.EventHandler
@@ -61,6 +59,7 @@ public class MagicBooks {
         MinecraftForge.EVENT_BUS.register(new LootHandler());
         MinecraftForge.EVENT_BUS.register(new CloneEvent());
         MinecraftForge.EVENT_BUS.register(new Tick());
+        MinecraftForge.EVENT_BUS.register(new EntityJoinEvent());
         CommonProxy.register();
         proxy.registerTileEntities();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagicBooks.instance, new ModGuiHandler());

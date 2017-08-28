@@ -1,6 +1,7 @@
 package com.kjmaster.mb.network;
 
 import com.kjmaster.mb.containers.*;
+import com.kjmaster.mb.guis.GuiManaInfuser;
 import com.kjmaster.mb.guis.crystals.GuiAirCrystal;
 import com.kjmaster.mb.guis.crystals.GuiEarthCrystal;
 import com.kjmaster.mb.guis.crystals.GuiFireCrystal;
@@ -39,6 +40,7 @@ public class ModGuiHandler implements IGuiHandler {
     public static final int AirCrystal = 8;
     public static final int FireCrystal = 9;
     public static final int WaterCrystal = 10;
+    public static final int ManaInfuser = 11;
     @Nullable
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -64,6 +66,8 @@ public class ModGuiHandler implements IGuiHandler {
             return new GuiFireCrystal(player.inventory, (TileEntityFireCrystal) world.getTileEntity(new BlockPos(x,y,z) ), world);
         if(ID == WaterCrystal)
             return new GuiWaterCrystal(player.inventory, (TileEntityWaterCrystal) world.getTileEntity(new BlockPos(x,y,z) ), world);
+        if(ID == ManaInfuser)
+            return new GuiManaInfuser(player.inventory, (TileEntityManaInfuser) world.getTileEntity(new BlockPos(x, y, z)), world);
 
         return null;
     }
@@ -73,6 +77,9 @@ public class ModGuiHandler implements IGuiHandler {
 
         if (ID == WoodCutRune) {
             return new ContainerWoodCutRune(player.inventory, (TileEntityWoodCutRune) world.getTileEntity(new BlockPos(x,y,z)));
+        }
+        if (ID == ManaInfuser) {
+            return new ContainerManaInfuser(player.inventory, (TileEntityManaInfuser) world.getTileEntity(new BlockPos(x,y,z)));
         }
         if (ID == EarthCrystal) {
             return new ContainerEarthCrystal(player.inventory, (TileEntityEarthCrystal) world.getTileEntity(new BlockPos(x,y,z)));

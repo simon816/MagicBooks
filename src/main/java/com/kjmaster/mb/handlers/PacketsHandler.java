@@ -4,10 +4,8 @@ import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellProvider;
 import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
 import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2Provider;
 import com.kjmaster.mb.chosenspells.chosenspell2.IChosenSpell2;
-import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3;
 import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3Provider;
 import com.kjmaster.mb.chosenspells.chosenspell3.IChosenSpell3;
-import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4;
 import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4Provider;
 import com.kjmaster.mb.chosenspells.chosenspell4.IChosenSpell4;
 import com.kjmaster.mb.chosenspells.chosenspell5.ChosenSpell5Provider;
@@ -23,6 +21,7 @@ import com.kjmaster.mb.guis.spellunlock.GuiEarthSpells;
 import com.kjmaster.mb.guis.spellunlock.GuiFireSpells;
 import com.kjmaster.mb.guis.spellunlock.GuiWaterSpells;
 import com.kjmaster.mb.init.ModItems;
+import com.kjmaster.mb.items.ItemMagicBook;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.earth.EarthSkillPointsProvider;
@@ -44,7 +43,6 @@ import com.kjmaster.mb.spellmanager.air.lightning.ILightningManager;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
-import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
@@ -235,44 +233,103 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } if (amount == 19) {
             if (serverPlayer.getHeldItemMainhand().getItem() == ModItems.MagicBook) {
                 int meta = serverPlayer.getHeldItemMainhand().getItemDamage();
+                ItemStack bookStack = serverPlayer.getHeldItemMainhand();
+                ItemMagicBook book = (ItemMagicBook) bookStack.getItem();
+                int earthMana = book.getEarthManaStored(bookStack);
+                int airMana = book.getAirManaStored(bookStack);
+                int fireMana = book.getFireManaStored(bookStack);
+                int waterMana = book.getWaterManaStored(bookStack);
                 switch (meta) {
                     case 0:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 1));
+                        ItemStack bookStack0 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book0 = (ItemMagicBook) bookStack0.getItem();
+                        book0.receiveEarthMana(bookStack0, earthMana, false);
+                        book0.receiveAirMana(bookStack0, airMana, false);
+                        book0.receiveFireMana(bookStack0, fireMana, false);
+                        book0.receiveWaterMana(bookStack0, waterMana, false);
                         break;
                     case 1:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 2));
+                        ItemStack bookStack1 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book1 = (ItemMagicBook) bookStack1.getItem();
+                        book1.receiveEarthMana(bookStack1, earthMana, false);
+                        book1.receiveAirMana(bookStack1, airMana, false);
+                        book1.receiveFireMana(bookStack1, fireMana, false);
+                        book1.receiveWaterMana(bookStack1, waterMana, false);
                         break;
                     case 2:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 3));
+                        ItemStack bookStack2 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book2 = (ItemMagicBook) bookStack2.getItem();
+                        book2.receiveEarthMana(bookStack2, earthMana, false);
+                        book2.receiveAirMana(bookStack2, airMana, false);
+                        book2.receiveFireMana(bookStack2, fireMana, false);
+                        book2.receiveWaterMana(bookStack2, waterMana, false);
                         break;
                     case 3:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 4));
+                        ItemStack bookStack3 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book3 = (ItemMagicBook) bookStack3.getItem();
+                        book3.receiveEarthMana(bookStack3, earthMana, false);
+                        book3.receiveAirMana(bookStack3, airMana, false);
+                        book3.receiveFireMana(bookStack3, fireMana, false);
+                        book3.receiveWaterMana(bookStack3, waterMana, false);
                         break;
                     case 4:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 5));
+                        ItemStack bookStack4 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book4 = (ItemMagicBook) bookStack4.getItem();
+                        book4.receiveEarthMana(bookStack4, earthMana, false);
+                        book4.receiveAirMana(bookStack4, airMana, false);
+                        book4.receiveFireMana(bookStack4, fireMana, false);
+                        book4.receiveWaterMana(bookStack4, waterMana, false);
                         break;
                     case 5:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 6));
+                        ItemStack bookStack5 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book5 = (ItemMagicBook) bookStack5.getItem();
+                        book5.receiveEarthMana(bookStack5, earthMana, false);
+                        book5.receiveAirMana(bookStack5, airMana, false);
+                        book5.receiveFireMana(bookStack5, fireMana, false);
+                        book5.receiveWaterMana(bookStack5, waterMana, false);
                         break;
                     case 6:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 7));
+                        ItemStack bookStack6 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book6 = (ItemMagicBook) bookStack6.getItem();
+                        book6.receiveEarthMana(bookStack6, earthMana, false);
+                        book6.receiveAirMana(bookStack6, airMana, false);
+                        book6.receiveFireMana(bookStack6, fireMana, false);
+                        book6.receiveWaterMana(bookStack6, waterMana, false);
                         break;
                     case 7:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 8));
+                        ItemStack bookStack7 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book7 = (ItemMagicBook) bookStack7.getItem();
+                        book7.receiveEarthMana(bookStack7, earthMana, false);
+                        book7.receiveAirMana(bookStack7, airMana, false);
+                        book7.receiveFireMana(bookStack7, fireMana, false);
+                        book7.receiveWaterMana(bookStack7, waterMana, false);
                         break;
                     case 8:
                         serverPlayer.getHeldItemMainhand().shrink(1);
                         serverPlayer.inventory.addItemStackToInventory(new ItemStack(ModItems.MagicBook, 1, 0));
+                        ItemStack bookStack8 = serverPlayer.getHeldItemMainhand();
+                        ItemMagicBook book8 = (ItemMagicBook) bookStack8.getItem();
+                        book8.receiveEarthMana(bookStack8, earthMana, false);
+                        book8.receiveAirMana(bookStack8, airMana, false);
+                        book8.receiveFireMana(bookStack8, fireMana, false);
+                        book8.receiveWaterMana(bookStack8, waterMana, false);
                         break;
-
                 }
             }
         // chosen spell 1

@@ -1,5 +1,6 @@
 package com.kjmaster.mb.blocks;
 
+import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterAirCrystal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -28,7 +29,7 @@ public class BlockGreaterAirCrystal extends BlockBase implements ITileEntityProv
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return null;
+        return Item.getItemFromBlock(ModBlocks.greaterAirCrystalBlock);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.kjmaster.mb.creative.ModCreativeTab;
 import com.kjmaster.mb.handlers.EnumHandler;
 import com.kjmaster.mb.items.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -31,8 +30,9 @@ public class ModItems {
     public static final Item EarthShard = new ItemEarthShard("earth_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item FireShard = new ItemEarthShard("fire_shard", ModCreativeTab.tabMagicBooks, 64);
     public static final Item WaterShard = new ItemEarthShard("water_shard", ModCreativeTab.tabMagicBooks, 64);
-    public static final Item MagicBook = new ItemMagicBook("magicbook", ModCreativeTab.tabMagicBooks, 1);
+    public static final Item MagicBook = new ItemMagicBook("magicbook", ModCreativeTab.tabMagicBooks, 1, 10000, 1000, 1000);
     public static final Item CrystalLinker = new ItemCrystalLinker("crystal_linker", ModCreativeTab.tabMagicBooks, 1);
+    public static final Item ArcaneShard = new ItemArcaneShard("arcane_shard", ModCreativeTab.tabMagicBooks, 64);
 
 
 
@@ -51,6 +51,7 @@ public class ModItems {
                     EarthShard,
                     FireShard,
                     WaterShard,
+                    ArcaneShard,
                     MagicBook,
                     CrystalLinker,
 
@@ -74,6 +75,7 @@ public class ModItems {
                 EarthShard,
                 FireShard,
                 WaterShard,
+                ArcaneShard,
                 CrystalLinker,
 
         };

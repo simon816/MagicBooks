@@ -3,6 +3,7 @@ package com.kjmaster.mb.tileentities.crystals;
 import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.mana.ManaStorage;
+import com.kjmaster.mb.tileentities.TileEntityManaInfuser;
 import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -56,25 +57,25 @@ public class TileEntityEarthCrystal extends TileEntity implements ITickable, ICa
                     BlockPos posToSendMana = getConnectedToPos();
                     TileEntity entity = world.getTileEntity(posToSendMana);
                     if(entity instanceof TileEntityEarthCrystal) {
-                        MagicBooks.LOGGER.info("Test1");
                         TileEntityEarthCrystal earthCrystal = (TileEntityEarthCrystal) entity;
                         if(earthCrystal.getCanRecieve() && this.storage.canExtract() && !earthCrystal.storage.isFull() && this.storage.getManaStored() >= MANA_USE) {
-                            MagicBooks.LOGGER.info("Test2");
                             earthCrystal.receiveMana(MANA_USE);
                             this.storage.extractMana(MANA_USE, false);
                         }
                     } else if (entity instanceof TileEntityWoodCutRune) {
-                        MagicBooks.LOGGER.info("Test3");
                         TileEntityWoodCutRune woodCutRune = (TileEntityWoodCutRune) entity;
                         if(woodCutRune.getCanReceive() && this.storage.canExtract() && !woodCutRune.storage.isFull() && this.storage.getManaStored() >= MANA_USE) {
-                            MagicBooks.LOGGER.info("Test4");
                             woodCutRune.recieveMana(MANA_USE);
+                            this.storage.extractMana(MANA_USE, false);
+                        }
+                    } else if (entity instanceof TileEntityManaInfuser) {
+                        TileEntityManaInfuser manaInfuser = (TileEntityManaInfuser) entity;
+                        if (manaInfuser.storage.canEarthReceive() && this.storage.canExtract() && !manaInfuser.storage.isEarthFull() && this.storage.getManaStored() >= MANA_USE) {
+                            manaInfuser.storage.receiveEarthMana(MANA_USE, false);
                             this.storage.extractMana(MANA_USE, false);
                         }
                     }
                 }
-                int mana = this.storage.getManaStored();
-                MagicBooks.LOGGER.info("crystal mana: " + mana);
             }
         }
     }

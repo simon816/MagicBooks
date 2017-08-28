@@ -72,7 +72,7 @@ public class ItemCrystalLinker extends ItemBase {
                 storedPos = null;
                 player.sendMessage(new TextComponentString("Stored position has been deleted"));
             }
-            else if(worldIn.getTileEntity(pos) instanceof TileEntityEarthCrystal && !worldIn.isRemote && (worldIn.getTileEntity(storedPos) instanceof TileEntityEarthCrystal || worldIn.getTileEntity(storedPos) instanceof TileEntityWoodCutRune))  {
+            else if(worldIn.getTileEntity(pos) instanceof TileEntityEarthCrystal && !worldIn.isRemote && (worldIn.getTileEntity(storedPos) instanceof TileEntityEarthCrystal || worldIn.getTileEntity(storedPos) instanceof TileEntityWoodCutRune || worldIn.getTileEntity(storedPos) instanceof TileEntityManaInfuser))  {
                 TileEntityEarthCrystal entityEarthCrystal = (TileEntityEarthCrystal) worldIn.getTileEntity(pos);
                 if (!(entityEarthCrystal.getHasConnection())) {
                     entityEarthCrystal.setConnectedToPos(storedPos);
@@ -82,7 +82,7 @@ public class ItemCrystalLinker extends ItemBase {
                     player.sendMessage(new TextComponentString("Stored position has been deleted"));
                 }
             }
-            else if (worldIn.getTileEntity(pos) instanceof TileEntityAirCrystal && !worldIn.isRemote && worldIn.getTileEntity(storedPos) instanceof TileEntityAirCrystal) {
+            else if (worldIn.getTileEntity(pos) instanceof TileEntityAirCrystal && !worldIn.isRemote && (worldIn.getTileEntity(storedPos) instanceof TileEntityAirCrystal || worldIn.getTileEntity(storedPos) instanceof TileEntityManaInfuser)) {
                 TileEntityAirCrystal entityAirCrystal = (TileEntityAirCrystal) worldIn.getTileEntity(pos);
                 if (!(entityAirCrystal.getHasConnection())) {
                     entityAirCrystal.setConnectedToPos(storedPos);
@@ -92,7 +92,7 @@ public class ItemCrystalLinker extends ItemBase {
                     player.sendMessage(new TextComponentString("Stored position has been deleted"));
                 }
             }
-            else if (worldIn.getTileEntity(pos) instanceof TileEntityFireCrystal && !worldIn.isRemote && worldIn.getTileEntity(storedPos) instanceof TileEntityFireCrystal) {
+            else if (worldIn.getTileEntity(pos) instanceof TileEntityFireCrystal && !worldIn.isRemote && (worldIn.getTileEntity(storedPos) instanceof TileEntityFireCrystal || worldIn.getTileEntity(storedPos) instanceof TileEntityManaInfuser)) {
                 TileEntityFireCrystal entityFireCrystal = (TileEntityFireCrystal) worldIn.getTileEntity(pos);
                 if (!(entityFireCrystal.getHasConnection())) {
                     entityFireCrystal.setConnectedToPos(storedPos);
@@ -102,7 +102,7 @@ public class ItemCrystalLinker extends ItemBase {
                     player.sendMessage(new TextComponentString("Stored position has been deleted"));
                 }
             }
-            else if (worldIn.getTileEntity(pos) instanceof TileEntityWaterCrystal && !worldIn.isRemote && worldIn.getTileEntity(storedPos) instanceof TileEntityWaterCrystal) {
+            else if (worldIn.getTileEntity(pos) instanceof TileEntityWaterCrystal && !worldIn.isRemote && (worldIn.getTileEntity(storedPos) instanceof TileEntityWaterCrystal || worldIn.getTileEntity(storedPos) instanceof TileEntityManaInfuser)) {
                 TileEntityWaterCrystal entityWaterCrystal = (TileEntityWaterCrystal) worldIn.getTileEntity(pos);
                 if (!(entityWaterCrystal.getHasConnection())) {
                     entityWaterCrystal.setConnectedToPos(storedPos);
@@ -130,6 +130,10 @@ public class ItemCrystalLinker extends ItemBase {
             player.sendMessage(new TextComponentString("Position stored as x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
         } else if (worldIn.getTileEntity(pos) instanceof TileEntityWaterCrystal && !worldIn.isRemote) {
             TileEntityWaterCrystal entityWaterCrystal = (TileEntityWaterCrystal) worldIn.getTileEntity(pos);
+            storedPos = pos;
+            player.sendMessage(new TextComponentString("Position stored as x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+        } else if (worldIn.getTileEntity(pos) instanceof TileEntityManaInfuser && !worldIn.isRemote) {
+            TileEntityManaInfuser entityManaInfuser = (TileEntityManaInfuser) worldIn.getTileEntity(pos);
             storedPos = pos;
             player.sendMessage(new TextComponentString("Position stored as x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
         }
