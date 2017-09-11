@@ -1,0 +1,52 @@
+## Italian Translation by Ermen07
+
+item.earth_book.name=Libro Della Terra
+item.air_book.name=Libro Dell'Aria
+item.fire_book.name=Libro Del Fuoco
+item.water_book.name=Libro Dell'Acqua
+
+item.air_shard.name= Frammento Dell'Aria
+item.earth_shard.name= Frammento Della Terra
+item.fire_shard.name= Frammento Del Fuoco
+item.water_shard.name= Frammento Dell'Acqua
+
+item.magicbook.nospell.name=Libro Magico
+item.magicbook.spell1.name=Incantesimo 1
+item.magicbook.spell2.name=Incantesimo 2
+item.magicbook.spell3.name=Incantesimo 3
+item.magicbook.spell4.name=Incantesimo 4
+item.magicbook.spell5.name=Incantesimo 5
+item.magicbook.spell6.name=Incantesimo 6
+item.magicbook.spell7.name=Incantesimo 7
+item.magicbook.spell8.name=Incantesimo 8
+
+tile.wallingrune_block.name=Runa Di Muro
+tile.drowningrune_block.name=Runa Di Affogare
+tile.walling_block.name=Blocco di Muro di Terra
+tile.woodcutrune_block.name=Runa Di Legname
+
+tile.air_shard_ore.name=Minerale di Frammento Dell'Aria
+tile.earth_shard_ore.name=Minerale di Frammento Della Terra
+tile.fire_shard_ore.name=Minerale di Frammento Del Fuoco
+tile.water_shard_ore.name=Minerale di Frammento Dell'Acqua
+
+entity.mb_watergolem.name="Lupo D'Acqua"
+
+itemGroup.MagicBooks=Libri Magici
+itemGroup.MagicBooksOres=Minerale di Libri Magici
+
+advancements.mb:root.desc=Hai un frammento!
+
+advancements.mb:airbook=Libro Dell'Aria
+advancements.mb:airbook.desc=Hai un libro dell'aria!
+
+advancements.mb:earthbook=Libro Della Terra
+advancements.mb:earthbook.desc=Hai un libro della terra!
+
+advancements.mb:firebook=Libro Del Fuoco
+advancements.mb:firebook.desc=Hai un libro del fuoco!
+
+advancements.mb:waterbook=Libro Dell'Acqua
+advancements.mb:waterbook.desc=Hai un libro dell'acqua!
+
+container.woodcutrune_block=Runa Di Legname
