@@ -20,11 +20,14 @@ import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Provider;
 import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.handlers.EnumHandler;
 import com.kjmaster.mb.mana.IManaContainerItem;
+import com.kjmaster.mb.network.UpdateChosenSpellsPacket;
+import com.kjmaster.mb.network.mbPacketHandler;
 import com.kjmaster.mb.util.NBTHelper;
 import com.kjmaster.mb.util.spells.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -41,6 +44,14 @@ public class ItemMagicBook extends Item implements IManaContainerItem {
     private int capacity;
     private int maxReceive;
     private int maxExtract;
+    private String chosenspell;
+    private String chosenspell2;
+    private String chosenspell3;
+    private String chosenspell4;
+    private String chosenspell5;
+    private String chosenspell6;
+    private String chosenspell7;
+    private String chosenspell8;
 
     public ItemMagicBook(String unlocalizedName, CreativeTabs tab, int maxSize, int capacity, int maxReceive, int maxExtract) {
         this.setUnlocalizedName(unlocalizedName);
@@ -208,263 +219,339 @@ public class ItemMagicBook extends Item implements IManaContainerItem {
         int meta = player.getHeldItem(handIn).getItemDamage();
         ItemStack bookStack = player.inventory.getCurrentItem();
         ItemMagicBook bookItem = (ItemMagicBook) bookStack.getItem();
-        if(player.isSneaking()) {
-           bookItem.receiveEarthMana(bookStack, 100, false);
-           bookItem.receiveWaterMana(bookStack, 100, false);
-           bookItem.receiveFireMana(bookStack, 100, false);
-           bookItem.receiveAirMana(bookStack, 100, false);
+        if(meta == 0) {
+            if(player.world.isRemote) {
+                player.openGui(MagicBooks.instance, 4, worldIn, (int)player.posX, (int)player.posY, (int)player.posZ );
+            }
         } else {
-            if(meta == 0) {
-                if(player.world.isRemote) {
-                    player.openGui(MagicBooks.instance, 4, worldIn, (int)player.posX, (int)player.posY, (int)player.posZ );
-                }
-            } else {
-                if (!(player.world.isRemote)) {
-                    IChosenSpell ChosenSpell = player.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
-                    String chosenspell = ChosenSpell.getChosenSpell();
-                    IChosenSpell2 ChosenSpell2 = player.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
-                    String chosenspell2 = ChosenSpell2.getChosenSpell2();
-                    IChosenSpell3 ChosenSpell3 = player.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
-                    String chosenspell3 = ChosenSpell3.getChosenSpell3();
-                    IChosenSpell4 ChosenSpell4 = player.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
-                    String chosenspell4 = ChosenSpell4.getChosenSpell4();
-                    IChosenSpell5 ChosenSpell5 = player.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
-                    String chosenspell5 = ChosenSpell5.getChosenSpell5();
-                    IChosenSpell6 ChosenSpell6 = player.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
-                    String chosenspell6 = ChosenSpell6.getChosenSpell6();
-                    IChosenSpell7 ChosenSpell7 = player.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
-                    String chosenspell7 = ChosenSpell7.getChosenSpell7();
-                    IChosenSpell8 ChosenSpell8 = player.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
-                    String chosenspell8 = ChosenSpell8.getChosenSpell8();
-                    switch (meta) {
-                        case 1 :
-                            switch (chosenspell) {
-                                case "bonemeal":
+            IChosenSpell ChosenSpell = player.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
+            chosenspell = ChosenSpell.getChosenSpell();
+            IChosenSpell2 ChosenSpell2 = player.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
+            chosenspell2 = ChosenSpell2.getChosenSpell2();
+            IChosenSpell3 ChosenSpell3 = player.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            chosenspell3 = ChosenSpell3.getChosenSpell3();
+            IChosenSpell4 ChosenSpell4 = player.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            chosenspell4 = ChosenSpell4.getChosenSpell4();
+            IChosenSpell5 ChosenSpell5 = player.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            chosenspell5 = ChosenSpell5.getChosenSpell5();
+            IChosenSpell6 ChosenSpell6 = player.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            chosenspell6 = ChosenSpell6.getChosenSpell6();
+            IChosenSpell7 ChosenSpell7 = player.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            chosenspell7 = ChosenSpell7.getChosenSpell7();
+            IChosenSpell8 ChosenSpell8 = player.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            chosenspell8 = ChosenSpell8.getChosenSpell8();
+            if(!player.world.isRemote) {
+                mbPacketHandler.INSTANCE.sendTo(new UpdateChosenSpellsPacket(chosenspell, chosenspell2,
+                        chosenspell3, chosenspell4, chosenspell5, chosenspell6, chosenspell7,
+                        chosenspell8), (EntityPlayerMP) player);
+            }
+            switch (meta) {
+                case 1 :
+                    switch (chosenspell) {
+                        case "bonemeal":
+                                if (player.world.isRemote)
                                     Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
                             break;
-                        case 2 :
-                            switch (chosenspell2) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
+                        case "clearwall":
+                                if (player.world.isRemote)
                                     ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
                             break;
-                        case 3:
-                            switch (chosenspell3) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
+                        case "invisibility":
+                                if (!player.world.isRemote)
                                     Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
                             break;
-                        case 4:
-                            switch (chosenspell4) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
+                        case "lightning":
+                                if (!player.world.isRemote)
                                     Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
                             break;
-                        case 5:
-                            switch (chosenspell5) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
+                        case "fireblast":
+                                if (!player.world.isRemote)
                                     FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
                             break;
-                        case 6:
-                            switch (chosenspell6) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
+                        case "waterwolf":
+                                if (!player.world.isRemote)
                                     WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
                             break;
-                        case 7:
-                            switch (chosenspell7) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
-                            break;
-                        case 8:
-                            switch (chosenspell8) {
-                                case "bonemeal":
-                                    Bonemeal.castBonemeal(worldIn, player, bookStack);
-                                    break;
-                                case "clearwall":
-                                    ClearWall.castClearWall(worldIn, player, bookStack);
-                                    break;
-                                case "invisibility":
-                                    Invisibility.castInvisibility(worldIn, player, bookStack);
-                                    break;
-                                case "lightning":
-                                    Lightning.castLightning(worldIn, player, bookStack);
-                                    break;
-                                case "fireblast":
-                                    FireBlast.castFireBlast(worldIn, player, bookStack);
-                                    break;
-                                case "waterwolf":
-                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
-                                    break;
-                                case "nothing":
-                                    // do nothing
-                                    break;
-                                default:
-                                    // do nothing
-                                    break;
-                            }
+                        case "nothing":
+                            // do nothing
                             break;
                         default:
-                            //do nothing
+                            // do nothing
+                            break;
                     }
-                }
+                    break;
+                case 2 :
+                    switch (chosenspell2) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (chosenspell3) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (chosenspell4) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (chosenspell5) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 6:
+                    switch (chosenspell6) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 7:
+                    switch (chosenspell7) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                case 8:
+                    switch (chosenspell8) {
+                        case "bonemeal":
+                            if (player.world.isRemote)
+                                Bonemeal.castBonemeal(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 100)
+                                bookItem.extractEarthMana(bookStack, 100, false);
+                            break;
+                        case "clearwall":
+                            if (player.world.isRemote)
+                                ClearWall.castClearWall(worldIn, player, bookStack);
+                            if(bookItem.getEarthManaStored(bookStack) >= 25)
+                                bookItem.extractEarthMana(bookStack, 25, false);
+                            break;
+                        case "invisibility":
+                                if (!player.world.isRemote)
+                                    Invisibility.castInvisibility(worldIn, player, bookStack);
+                            break;
+                        case "lightning":
+                                if (!player.world.isRemote)
+                                    Lightning.castLightning(worldIn, player, bookStack);
+                            break;
+                        case "fireblast":
+                                if (!player.world.isRemote)
+                                    FireBlast.castFireBlast(worldIn, player, bookStack);
+                            break;
+                        case "waterwolf":
+                                if (!player.world.isRemote)
+                                    WaterWolf.castWaterWolf(worldIn, player, bookStack);
+                            break;
+                        case "nothing":
+                            // do nothing
+                            break;
+                        default:
+                            // do nothing
+                            break;
+                    }
+                    break;
+                default:
+                    //do nothing
             }
         }
         return super.onItemRightClick(worldIn, player, handIn);

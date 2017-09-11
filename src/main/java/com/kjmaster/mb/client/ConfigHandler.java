@@ -23,6 +23,8 @@ public class ConfigHandler {
     public static boolean isWaterWolfEnabled;
     public static int maxWaterWolves;
 
+    public static boolean isBookEnabled;
+
     public static void init(File file) {
         config = new Configuration(file);
         syncConfig();
@@ -47,6 +49,11 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Water Spells Settings");
         isWaterWolfEnabled = config.getBoolean("isWaterWolfEnabled", category, true, "Sets whether the water wolf spell is enabled or not");
         maxWaterWolves = config.getInt("maxWaterWolves", category, 10, 1, 30, "Set max number of water wolves a player can spawn");
+        config.save();
+
+        category = "Guide Book";
+        config.addCustomCategoryComment(category, "Guide-API Settings");
+        isBookEnabled = config.getBoolean("isBookEnabled", category, true, "If true the player will spawn in with a guide book when Guide-API is installed");
         config.save();
     }
 }

@@ -1,5 +1,6 @@
 package com.kjmaster.mb.handlers;
 
+import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellProvider;
 import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
 import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2Provider;
@@ -16,13 +17,11 @@ import com.kjmaster.mb.chosenspells.chosenspell7.ChosenSpell7Provider;
 import com.kjmaster.mb.chosenspells.chosenspell7.IChosenSpell7;
 import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Provider;
 import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
-import com.kjmaster.mb.guis.spellunlock.GuiAirSpells;
-import com.kjmaster.mb.guis.spellunlock.GuiEarthSpells;
-import com.kjmaster.mb.guis.spellunlock.GuiFireSpells;
-import com.kjmaster.mb.guis.spellunlock.GuiWaterSpells;
 import com.kjmaster.mb.init.ModItems;
 import com.kjmaster.mb.items.ItemMagicBook;
 import com.kjmaster.mb.network.PointsPacket;
+import com.kjmaster.mb.network.UpdatePointsPacket;
+import com.kjmaster.mb.network.mbPacketHandler;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.earth.EarthSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.air.IAirSkillPoints;
@@ -43,6 +42,7 @@ import com.kjmaster.mb.spellmanager.air.lightning.ILightningManager;
 import com.kjmaster.mb.spellmanager.air.lightning.LightningManagerProvider;
 import com.kjmaster.mb.spellmanager.water.waterwolf.IWaterWolfManager;
 import com.kjmaster.mb.spellmanager.water.waterwolf.WaterWolfManagerProvider;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
@@ -59,7 +59,17 @@ import static com.kjmaster.mb.client.ConfigHandler.*;
 public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
     @Override
     public IMessage onMessage(PointsPacket message, MessageContext ctx) {
-        EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
+        MagicBooks.proxy.getThreadFromContext(ctx).addScheduledTask(new Runnable() {
+            @Override
+            public void run() {
+                processMessage(message, ctx);
+            }
+        });
+        return null;
+    }
+
+    private void processMessage(PointsPacket message, MessageContext ctx) {
+        EntityPlayer serverPlayer = MagicBooks.proxy.getPlayerEntity(ctx);
         float amount = message.toSend;
         if (amount == 1 && isBonemealEnabled) {
             IBoneMealManager BONEMEAL_UNLOCKED = serverPlayer.getCapability(BoneMealManagerProvider.SPELL_MANAGER_CAP, null);
@@ -214,23 +224,7 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } else if (amount == 13) {
             serverPlayer.sendMessage(new TextComponentString(TextFormatting.GREEN + "This spell has been disabled!"));
         }
-        if (amount == 15) {
-            IAirSkillPoints airSkillPoints = serverPlayer.getCapability(AirSkillPointsProvider.AIRSKILLPOINTS_CAP, null);
-             float points = airSkillPoints.getAirSkillPoints();
-             GuiAirSpells.airpoints = points;
-        } if (amount == 16) {
-            IEarthSkillPoints earthSkillPoints = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
-            float points = earthSkillPoints.getEarthSkillPoints();
-            GuiEarthSpells.earthpoints = points;
-        } if (amount == 17) {
-            IFireSkillPoints fireSkillPoints = serverPlayer.getCapability(FireSkillPointsProvider.FIRESKILLPOINTS_CAP, null);
-            float points = fireSkillPoints.getFireSkillPoints();
-            GuiFireSpells.firepoints = points;
-        } if (amount == 18) {
-            IWaterSkillPoints waterSkillPoints = serverPlayer.getCapability(WaterSkillPointsProvider.WATERSKILLPOINTS_CAP, null);
-            float points = waterSkillPoints.getWaterSkillPoints();
-            GuiWaterSpells.waterpoints = points;
-        } if (amount == 19) {
+        if (amount == 19) {
             if (serverPlayer.getHeldItemMainhand().getItem() == ModItems.MagicBook) {
                 int meta = serverPlayer.getHeldItemMainhand().getItemDamage();
                 ItemStack bookStack = serverPlayer.getHeldItemMainhand();
@@ -489,8 +483,27 @@ public class PacketsHandler implements IMessageHandler<PointsPacket, IMessage> {
         } if (amount == 67) {
             IChosenSpell8 ChosenSpell8 = serverPlayer.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
             ChosenSpell8.setChosenSpell8("waterwolf");
+        } if (amount == 70) {
+            EntityPlayerMP playerMP = (EntityPlayerMP) serverPlayer;
+            IEarthSkillPoints earthCap = serverPlayer.getCapability(EarthSkillPointsProvider.EARTHSKILLPOINTS_CAP, null);
+            float earthPoints = earthCap.getEarthSkillPoints();
+            mbPacketHandler.INSTANCE.sendTo(new UpdatePointsPacket("Earth", earthPoints), playerMP);
+        } if (amount == 71) {
+            EntityPlayerMP playerMP = (EntityPlayerMP) serverPlayer;
+            IAirSkillPoints airCap = serverPlayer.getCapability(AirSkillPointsProvider.AIRSKILLPOINTS_CAP, null);
+            float airPoints = airCap.getAirSkillPoints();
+            mbPacketHandler.INSTANCE.sendTo(new UpdatePointsPacket("Air", airPoints), playerMP);
+        } if (amount == 72) {
+            EntityPlayerMP playerMP = (EntityPlayerMP) serverPlayer;
+            IFireSkillPoints fireCap = serverPlayer.getCapability(FireSkillPointsProvider.FIRESKILLPOINTS_CAP, null);
+            float firePoints = fireCap.getFireSkillPoints();
+            mbPacketHandler.INSTANCE.sendTo(new UpdatePointsPacket("Fire", firePoints), playerMP);
+        } if (amount == 73) {
+            EntityPlayerMP playerMP = (EntityPlayerMP) serverPlayer;
+            IWaterSkillPoints waterCap = serverPlayer.getCapability(WaterSkillPointsProvider.WATERSKILLPOINTS_CAP, null);
+            float waterPoints = waterCap.getWaterSkillPoints();
+            mbPacketHandler.INSTANCE.sendTo(new UpdatePointsPacket("Water", waterPoints), playerMP);
         }
-        return null;
     }
 }
 

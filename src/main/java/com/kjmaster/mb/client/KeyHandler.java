@@ -1,11 +1,15 @@
 package com.kjmaster.mb.client;
 
+import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.Ref;
 import com.kjmaster.mb.guis.spellunlock.GuiEarthSpells;
 import com.kjmaster.mb.network.PointsPacket;
 import com.kjmaster.mb.network.mbPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,8 +37,7 @@ public class KeyHandler {
     @SubscribeEvent(receiveCanceled = false)
     public static void onKeyboard(@Nonnull InputEvent.KeyInputEvent event) {
         if(SPELLGUI_KEY.isPressed() && Minecraft.getMinecraft().currentScreen == null) {
-            final GuiEarthSpells gui = new GuiEarthSpells();
-            Minecraft.getMinecraft().displayGuiScreen(gui);
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEarthSpells());
         }
         if(CHANGEBOOK_KEY.isPressed()) {
             mbPacketHandler.INSTANCE.sendToServer(new PointsPacket(19));

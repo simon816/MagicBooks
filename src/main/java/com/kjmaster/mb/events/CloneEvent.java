@@ -5,6 +5,18 @@ import com.kjmaster.mb.chosenspells.chosenspell.ChosenSpellProvider;
 import com.kjmaster.mb.chosenspells.chosenspell.IChosenSpell;
 import com.kjmaster.mb.chosenspells.chosenspell2.ChosenSpell2Provider;
 import com.kjmaster.mb.chosenspells.chosenspell2.IChosenSpell2;
+import com.kjmaster.mb.chosenspells.chosenspell3.ChosenSpell3Provider;
+import com.kjmaster.mb.chosenspells.chosenspell3.IChosenSpell3;
+import com.kjmaster.mb.chosenspells.chosenspell4.ChosenSpell4Provider;
+import com.kjmaster.mb.chosenspells.chosenspell4.IChosenSpell4;
+import com.kjmaster.mb.chosenspells.chosenspell5.ChosenSpell5Provider;
+import com.kjmaster.mb.chosenspells.chosenspell5.IChosenSpell5;
+import com.kjmaster.mb.chosenspells.chosenspell6.ChosenSpell6Provider;
+import com.kjmaster.mb.chosenspells.chosenspell6.IChosenSpell6;
+import com.kjmaster.mb.chosenspells.chosenspell7.ChosenSpell7Provider;
+import com.kjmaster.mb.chosenspells.chosenspell7.IChosenSpell7;
+import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Provider;
+import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsProvider;
 import com.kjmaster.mb.skillpoints.air.IAirSkillPoints;
 import com.kjmaster.mb.skillpoints.earth.EarthSkillPointsProvider;
@@ -68,12 +80,38 @@ public class CloneEvent {
             IWaterWolfManager oldWaterWolfPoints = event.getOriginal().getCapability(WaterWolfManagerProvider.WATERWOLF_MANAGER_CAP, null);
             waterWolfPoints.setWaterWolf(oldWaterWolfPoints.getWaterWolf());
             //Clone Chosen Spells
+            //1
             IChosenSpell chosenSpell = player.getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
             IChosenSpell oldChosenSpell = event.getOriginal().getCapability(ChosenSpellProvider.CHOSENSPELL_CAP, null);
             chosenSpell.setChosenSpell(oldChosenSpell.getChosenSpell());
+            //2
             IChosenSpell2 chosenSpell2 = player.getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
             IChosenSpell2 oldChosenSpell2 = event.getOriginal().getCapability(ChosenSpell2Provider.CHOSENSPELL2_CAP, null);
             chosenSpell2.setChosenSpell2(oldChosenSpell2.getChosenSpell2());
+            //3
+            IChosenSpell3 chosenSpell3 = player.getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            IChosenSpell3 oldChosenSpell3 = event.getOriginal().getCapability(ChosenSpell3Provider.CHOSENSPELL3_CAP, null);
+            chosenSpell3.setChosenSpell3(oldChosenSpell3.getChosenSpell3());
+            //4
+            IChosenSpell4 chosenSpell4 = player.getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            IChosenSpell4 oldChosenSpell4 = event.getOriginal().getCapability(ChosenSpell4Provider.CHOSENSPELL4_CAP, null);
+            chosenSpell4.setChosenSpell4(oldChosenSpell4.getChosenSpell4());
+            //5
+            IChosenSpell5 chosenSpell5 = player.getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            IChosenSpell5 oldChosenSpell5 = event.getOriginal().getCapability(ChosenSpell5Provider.CHOSENSPELL5_CAP, null);
+            chosenSpell5.setChosenSpell5(oldChosenSpell5.getChosenSpell5());
+            //6
+            IChosenSpell6 chosenSpell6 = player.getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            IChosenSpell6 oldChosenSpell6 = event.getOriginal().getCapability(ChosenSpell6Provider.CHOSENSPELL6_CAP, null);
+            chosenSpell6.setChosenSpell6(oldChosenSpell6.getChosenSpell6());
+            //7
+            IChosenSpell7 chosenSpell7 = player.getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            IChosenSpell7 oldChosenSpell7 = event.getOriginal().getCapability(ChosenSpell7Provider.CHOSENSPELL7_CAP, null);
+            chosenSpell7.setChosenSpell7(oldChosenSpell7.getChosenSpell7());
+            //8
+            IChosenSpell8 chosenSpell8 = player.getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            IChosenSpell8 oldChosenSpell8 = event.getOriginal().getCapability(ChosenSpell8Provider.CHOSENSPELL8_CAP, null);
+            chosenSpell8.setChosenSpell8(oldChosenSpell8.getChosenSpell8());
         }
     }
 }

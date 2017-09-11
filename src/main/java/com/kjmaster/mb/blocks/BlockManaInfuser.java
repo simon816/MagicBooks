@@ -4,7 +4,6 @@ import com.kjmaster.mb.MagicBooks;
 import com.kjmaster.mb.init.ModBlocks;
 import com.kjmaster.mb.network.ModGuiHandler;
 import com.kjmaster.mb.tileentities.TileEntityManaInfuser;
-import com.kjmaster.mb.tileentities.TileEntityWoodCutRune;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

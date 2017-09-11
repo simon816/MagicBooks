@@ -291,5 +291,11 @@ public class ExampleBook implements IGuideBook {
         Guide.isGuideEnabled = true;
         this.bookStack = bookStack;
     }
+
+    @Nullable
+    @Override
+    public IRecipe getRecipe(@Nonnull ItemStack bookStack) {
+        return new ShapelessOreRecipe(new ResourceLocation(Ref.MODID, "recipe"), bookStack, Items.BOOK, ModItems.ArcaneShard).setRegistryName("magic_books_guide_recipe");
+    }
 }
 

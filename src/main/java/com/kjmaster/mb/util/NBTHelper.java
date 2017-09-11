@@ -35,7 +35,6 @@ public class NBTHelper {
             stored += accepted;
             NBTHelper.setInt(container, "EarthMana", stored);
         }
-        MagicBooks.LOGGER.info("Accepted: " + accepted);
         return accepted;
     }
 
@@ -46,7 +45,6 @@ public class NBTHelper {
             stored -= extracted;
             NBTHelper.setInt(container, "EarthMana", stored);
         }
-        MagicBooks.LOGGER.info("Extracted: " + extracted);
         return extracted;
     }
 
@@ -63,7 +61,6 @@ public class NBTHelper {
             stored += accepted;
             NBTHelper.setInt(container, "AirMana", stored);
         }
-        MagicBooks.LOGGER.info("Accepted: " + accepted);
         return accepted;
     }
 
@@ -74,7 +71,6 @@ public class NBTHelper {
             stored -= extracted;
             NBTHelper.setInt(container, "AirMana", stored);
         }
-        MagicBooks.LOGGER.info("Extracted: " + extracted);
         return extracted;
     }
 
@@ -91,7 +87,6 @@ public class NBTHelper {
             stored += accepted;
             NBTHelper.setInt(container, "FireMana", stored);
         }
-        MagicBooks.LOGGER.info("Accepted: " + accepted);
         return accepted;
     }
 
@@ -102,7 +97,6 @@ public class NBTHelper {
             stored -= extracted;
             NBTHelper.setInt(container, "FireMana", stored);
         }
-        MagicBooks.LOGGER.info("Extracted: " + extracted);
         return extracted;
     }
 
@@ -119,7 +113,6 @@ public class NBTHelper {
             stored += accepted;
             NBTHelper.setInt(container, "WaterMana", stored);
         }
-        MagicBooks.LOGGER.info("Accepted: " + accepted);
         return accepted;
     }
 
@@ -130,7 +123,6 @@ public class NBTHelper {
             stored -= extracted;
             NBTHelper.setInt(container, "WaterMana", stored);
         }
-        MagicBooks.LOGGER.info("Extracted: " + extracted);
         return extracted;
     }
 

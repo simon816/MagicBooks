@@ -29,8 +29,14 @@ import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8;
 import com.kjmaster.mb.chosenspells.chosenspell8.ChosenSpell8Storage;
 import com.kjmaster.mb.chosenspells.chosenspell8.IChosenSpell8;
 import com.kjmaster.mb.handlers.PacketsHandler;
+import com.kjmaster.mb.handlers.RayTracePacketHandler;
+import com.kjmaster.mb.handlers.UpdateChosenSpellsHandler;
+import com.kjmaster.mb.handlers.UpdatePointsHandler;
 import com.kjmaster.mb.mana.CapabilityMana;
 import com.kjmaster.mb.network.PointsPacket;
+import com.kjmaster.mb.network.RayTracePacket;
+import com.kjmaster.mb.network.UpdateChosenSpellsPacket;
+import com.kjmaster.mb.network.UpdatePointsPacket;
 import com.kjmaster.mb.skillpoints.air.AirSkillPoints;
 import com.kjmaster.mb.skillpoints.air.AirSkillPointsStorage;
 import com.kjmaster.mb.skillpoints.air.IAirSkillPoints;
@@ -71,11 +77,15 @@ import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterEarthCrysta
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterFireCrystal;
 import com.kjmaster.mb.tileentities.greatercrystals.TileEntityGreaterWaterCrystal;
 import com.kjmaster.mb.worldgen.OreGen;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IThreadListener;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import com.kjmaster.mb.Ref;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -88,11 +98,13 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {}
     public void init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new OreGen(), 0);
+
+
     }
     public void postInit(FMLPostInitializationEvent event) {}
     public void serverStarting(FMLServerStartingEvent event) {}
     public void serverStopping(FMLServerStoppingEvent event) {}
-    public static void register() {
+    public void register() {
         CapabilityManager.INSTANCE.register(IAirSkillPoints.class, new AirSkillPointsStorage(), AirSkillPoints.class );
         CapabilityManager.INSTANCE.register(IEarthSkillPoints.class, new EarthSkillPointsStorage(), EarthSkillPoints.class );
         CapabilityManager.INSTANCE.register(IFireSkillPoints.class, new FireSkillPointsStorage(), FireSkillPoints.class);
@@ -115,6 +127,10 @@ public class CommonProxy {
 
         //Server packets
         INSTANCE.registerMessage(PacketsHandler.class, PointsPacket.class, Ref.PACKET_ID_EARTHPOINTS, Side.SERVER);
+        INSTANCE.registerMessage(RayTracePacketHandler.class, RayTracePacket.class, 3, Side.SERVER);
+
+        INSTANCE.registerMessage(UpdatePointsHandler.class, UpdatePointsPacket.class, 2, Side.CLIENT);
+        INSTANCE.registerMessage(UpdateChosenSpellsHandler.class, UpdateChosenSpellsPacket.class, 4, Side.CLIENT);
     }
 
     public void registerModelBakeryVariants() {}
@@ -134,5 +150,20 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityGreaterWaterCrystal.class, Ref.MODID + ":greater_water_crystal_block");
 
         GameRegistry.registerTileEntity(TileEntityManaInfuser.class, Ref.MODID + ":mana_infuser");
+    }
+
+    /**
+     * Returns a side-appropriate EntityPlayer for use during message handling
+     */
+    public EntityPlayer getPlayerEntity(MessageContext ctx) {
+        return ctx.getServerHandler().player;
+    }
+
+    /**
+     * Returns the current thread based on side during message handling,
+     * used for ensuring that the message is being handled by the main thread
+     */
+    public IThreadListener getThreadFromContext(MessageContext ctx) {
+        return ctx.getServerHandler().player.getServer();
     }
 }
